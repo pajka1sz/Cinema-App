@@ -2,6 +2,7 @@ package agh.to.lab.cinema.model.users;
 
 import agh.to.lab.cinema.model.rates.MovieRate;
 import jakarta.persistence.*;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.List;
 
@@ -41,5 +42,18 @@ public class CinemaUser {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public static boolean validateEmail(CinemaUser cinemaUser) {
+        return cinemaUser.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$");
+    }
+
+    public static CinemaUser hashPassword(CinemaUser cinemaUser) {
+        cinemaUser.password = BCrypt.hashpw(cinemaUser.password, BCrypt.gensalt());
+        return cinemaUser;
     }
 }
