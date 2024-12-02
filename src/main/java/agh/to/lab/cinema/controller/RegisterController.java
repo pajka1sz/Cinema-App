@@ -1,6 +1,8 @@
 package agh.to.lab.cinema.controller;
 
 import agh.to.lab.cinema.app.CinemaApp;
+import agh.to.lab.cinema.model.users.CinemaUser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -10,6 +12,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
+import java.util.List;
 
 public class RegisterController {
     // Register text fields, labels etc.
@@ -47,8 +51,26 @@ public class RegisterController {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println("Response body: " + response.body());
 
-        if (response.body().equals("User added"))
-                successfulRegisterLabel.setVisible(true);
+        if (response.body().equals("User added")) {
+            successfulRegisterLabel.setVisible(true);
+
+            String getUsersUrl = "http://localhost:8080/api";
+            HttpRequest getUsersRequest = HttpRequest.newBuilder()
+                    .uri(URI.create(getUsersUrl))
+                    .header("Accept", "application/json")
+                    .GET()
+                    .build();
+            HttpResponse<String> getUsersResponse = client.send(getUsersRequest, HttpResponse.BodyHandlers.ofString());
+            List<CinemaUser> users = Arrays.asList(new ObjectMapper().readValue(getUsersResponse.body(), CinemaUser[].class));
+            for (CinemaUser user: users) {
+                if (user.getUsername().equals(usernameTextFieldRegister.getText())
+                        && user.getEmail().equals(emailTextFieldRegister.getText())) {
+                    System.out.println("FOUND!!!");
+                    CinemaApp.setCinemaUser(user);
+                    CinemaApp.loadView("views/userView.fxml");
+                }
+            }
+        }
         else if (response.body().equals("Invalid email")) {
             emailLabelRegister.setVisible(true);
             emailLabelRegister.setText("Invalid email");

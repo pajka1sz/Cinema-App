@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class CinemaApp extends Application {
     private static Stage primaryStage;
+    private static CinemaUser cinemaUser;
 
     @Override
     public void start(Stage primaryStage) {
@@ -36,5 +37,13 @@ public class CinemaApp extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setCinemaUser(CinemaUser cinemaUser) {
+        CinemaApp.cinemaUser = cinemaUser;
+    }
+
+    public static CinemaUser getCinemaUser() {
+        return cinemaUser;
     }
 }

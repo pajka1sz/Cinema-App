@@ -1,16 +1,21 @@
 package agh.to.lab.cinema.controller;
 
 import agh.to.lab.cinema.app.CinemaApp;
+import agh.to.lab.cinema.model.users.CinemaUser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
+import java.util.List;
 
 public class LoginController {
     // Login view labels, textFields etc.
@@ -47,6 +52,24 @@ public class LoginController {
             loginResultLabel.setVisible(true);
             loginResultLabel.setText("You have successfully logged in!");
             loginResultLabel.setTextFill(Color.color(0, 1.0, 0));
+
+            String getUsersUrl = "http://localhost:8080/api";
+            HttpRequest getUsersRequest = HttpRequest.newBuilder()
+                    .uri(URI.create(getUsersUrl))
+                    .header("Accept", "application/json")
+                    .GET()
+                    .build();
+            HttpResponse<String> getUsersResponse = client.send(getUsersRequest, HttpResponse.BodyHandlers.ofString());
+            List<CinemaUser> users = Arrays.asList(new ObjectMapper().readValue(getUsersResponse.body(), CinemaUser[].class));
+            for (CinemaUser user: users) {
+                if (user.getUsername().equals(usernameTextFieldLogin.getText())
+                        && new BCryptPasswordEncoder().matches(passwordTextFieldLogin.getText(), user.getPassword())) {
+                    System.out.println("FOUND!");
+                    CinemaApp.setCinemaUser(user);
+                    CinemaApp.loadView("views/userView.fxml");
+                    break;
+                }
+            }
         }
         else if (response.body().equals("User not found")) {
             loginResultLabel.setVisible(true);
