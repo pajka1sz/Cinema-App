@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="agh.to.lab.cinema.controller.RegisterController"
+            minHeight="550.0" minWidth="850.0">
+    <center>
+        <!-- Register view -->
+        <VBox spacing="10" alignment="CENTER" prefWidth="300" minWidth="400" maxWidth="600">
+            <Label>Register</Label>
+            <HBox spacing="10" alignment="CENTER">
+                <VBox spacing="20" alignment="CENTER_RIGHT">
+                    <Label>Email:</Label>
+                    <Label>Username:</Label>
+                    <Label>Password:</Label>
+                </VBox>
+                <VBox spacing="10" alignment="CENTER">
+                    <TextField fx:id="emailTextFieldRegister" onKeyTyped="#resetEmailLabelRegister"/>
+                    <TextField fx:id="usernameTextFieldRegister" onKeyTyped="#resetUsernameLabelRegister" />
+                    <PasswordField fx:id="passwordTextFieldRegister" onKeyTyped="#resetPasswordLabelRegister" />
+                </VBox>
+                <VBox spacing="10" alignment="CENTER_LEFT">
+                    <Label fx:id="emailLabelRegister" visible="false" textFill="red" />
+                    <Label fx:id="usernameLabelRegister" visible="false" textFill="red" />
+                    <Label fx:id="passwordLabelRegister" visible="false" textFill="red" />
+                </VBox>
+            </HBox>
+            <Button onAction="#sendRegisterPostRequest">Register</Button>
+            <Label fx:id="successfulRegisterLabel" visible="false" textFill="green">You have been successfully registered!</Label>
+            <Button onAction="#goToLogin">Back to login page</Button>
+        </VBox>
+    </center>
+</BorderPane>
