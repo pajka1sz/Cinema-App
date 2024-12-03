@@ -1,9 +1,12 @@
 package agh.to.lab.cinema.model.users;
 
+import agh.to.lab.cinema.model.purchases.Purchase;
 import agh.to.lab.cinema.model.rates.MovieRate;
+import agh.to.lab.cinema.model.roles.Role;
 import jakarta.persistence.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -24,12 +27,24 @@ public class CinemaUser {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieRate> ratings;
 
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Purchase> purchases;
+
     public CinemaUser() {}
 
-    public CinemaUser(String username, String password, String email) {
+    public CinemaUser(String username, String password, String email, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
+        this.createdAt = LocalDateTime.now();
     }
 
     public Long getId() {

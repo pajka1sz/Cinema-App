@@ -1,6 +1,7 @@
 package agh.to.lab.cinema.model.movies;
 
 import agh.to.lab.cinema.model.rates.MovieRate;
+import agh.to.lab.cinema.model.seances.Seance;
 import agh.to.lab.cinema.model.types.Type;
 import jakarta.persistence.*;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(unique = true, nullable = false)
     private String title;
@@ -33,6 +34,9 @@ public class Movie {
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieRate> ratings;
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Seance> seances;
+
     public Movie() {}
 
     public Movie(String title, String description, Integer length) {
@@ -41,7 +45,7 @@ public class Movie {
         this.length = length;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
