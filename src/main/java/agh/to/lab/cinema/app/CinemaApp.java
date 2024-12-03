@@ -11,11 +11,11 @@ import java.io.IOException;
 public class CinemaApp extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         try {
             // load layout from FXML file
             var loader = new FXMLLoader();
-            loader.setLocation(CinemaApp.class.getClassLoader().getResource("view.fxml"));
+            loader.setLocation(CinemaApp.class.getClassLoader().getResource("views/adminPanel.fxml"));
             BorderPane rootLayout = loader.load();
 
             // add layout to a scene and show them all
