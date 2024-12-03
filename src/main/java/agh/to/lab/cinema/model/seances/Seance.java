@@ -1,10 +1,12 @@
 package agh.to.lab.cinema.model.seances;
 
 import agh.to.lab.cinema.model.movies.Movie;
+import agh.to.lab.cinema.model.purchases.Purchase;
 import agh.to.lab.cinema.model.rooms.Room;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Seance {
@@ -19,6 +21,9 @@ public class Seance {
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
+
+    @OneToMany(mappedBy = "seance", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Purchase> purchases;
 
     @Column
     private LocalDateTime startDate;

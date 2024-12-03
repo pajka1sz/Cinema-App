@@ -1,6 +1,9 @@
 package agh.to.lab.cinema.model.rooms;
 
+import agh.to.lab.cinema.model.seances.Seance;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Room {
@@ -13,6 +16,9 @@ public class Room {
 
     @Column(nullable = false)
     private Integer capacity;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Seance> seances;
 
     public Room() {}
 
