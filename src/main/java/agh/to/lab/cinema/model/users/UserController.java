@@ -1,5 +1,6 @@
 package agh.to.lab.cinema.model.users;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,11 +30,20 @@ public class UserController {
 
     @PostMapping(value = "/register", consumes = "application/json")
     public String registerUser(@RequestBody CinemaUser user) {
-        if (!CinemaUser.validateEmail(user)) {
-            return "Invalid email";
+        try {
+            if (!CinemaUser.validateEmail(user)) {
+                return "Invalid email";
+            }
+            userService.addUser(user);
+            return "User added";
+        } catch (DataIntegrityViolationException e) {
+            System.out.println(e.getMessage().contains("username") + " " + e.getMessage().contains("email"));
+            if (e.getMessage().contains("USERNAME NULLS FIRST"))
+                return "Username not available";
+            if (e.getMessage().contains("EMAIL NULLS FIRST"))
+                return "Email occupied";
+            return e.getMessage();
         }
-        userService.addUser(user);
-        return "User added";
     }
 
     @PostMapping(value = "/login", consumes = "application/json")

@@ -1,5 +1,6 @@
 package agh.to.lab.cinema.app;
 
+import agh.to.lab.cinema.model.users.CinemaUser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,30 +10,40 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class CinemaApp extends Application {
+    private static Stage primaryStage;
+    private static CinemaUser loggedUser;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
+        CinemaApp.primaryStage = primaryStage;
+        loadView("views/login.fxml");
+    }
+
+    public static void loadView(String fxmlPath) {
         try {
             // load layout from FXML file
             var loader = new FXMLLoader();
-            loader.setLocation(CinemaApp.class.getClassLoader().getResource("view.fxml"));
-            BorderPane rootLayout = loader.load();
+            loader.setLocation(CinemaApp.class.getClassLoader().getResource(fxmlPath));
+            BorderPane view = loader.load();
 
             // add layout to a scene and show them all
-            configureStage(primaryStage, rootLayout);
+            var scene = new Scene(view);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Cinema app");
+            primaryStage.minWidthProperty().bind(view.minWidthProperty());
+            primaryStage.minHeightProperty().bind(view.minHeightProperty());
             primaryStage.show();
 
         } catch (IOException e) {
-            // don't do this in common apps
             e.printStackTrace();
         }
     }
 
-    private void configureStage(Stage primaryStage, BorderPane rootLayout) {
-        var scene = new Scene(rootLayout);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Cinema app");
-        primaryStage.minWidthProperty().bind(rootLayout.minWidthProperty());
-        primaryStage.minHeightProperty().bind(rootLayout.minHeightProperty());
+    public static void setLoggedUser(CinemaUser loggedUser) {
+        CinemaApp.loggedUser = loggedUser;
+    }
+
+    public static CinemaUser getLoggedUser() {
+        return loggedUser;
     }
 }
