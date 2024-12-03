@@ -15,9 +15,4 @@ public enum RoleType {
     public String getRoleName() {
         return roleName;
     }
-
-    @JsonCreator
-    public static RoleType fromString(String roleName) {
-        return RoleType.valueOf(roleName.toUpperCase());
-    }
 }

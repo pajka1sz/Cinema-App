@@ -71,7 +71,7 @@ public class RegisterController {
                         && user.getEmail().equals(emailTextFieldRegister.getText())) {
                     System.out.println("USER FOUND!!!");
                     CinemaApp.setLoggedUser(user);
-                    String loadedView = user.getRoleType().equals(RoleType.ADMIN) ? "views/adminPanel.fxml" : "views/userView.fxml";
+                    String loadedView = user.getRole().getRole().equals(RoleType.ADMIN) ? "views/adminPanel.fxml" : "views/userView.fxml";
                     CinemaApp.loadView(loadedView);
                 }
             }

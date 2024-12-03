@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public void addUser(CinemaUser user) {
-        userRepository.save(CinemaUser.hashPassword(user));
+        userRepository.save(user);
     }
 
     public void deleteUser(Integer id) {
@@ -45,5 +45,13 @@ public class UserService {
     public Role getAdminRole() {
         return roleRepository.findByRole(RoleType.ADMIN)
                 .orElseThrow(() -> new RuntimeException("Admin role not found"));
+    }
+
+    public List<CinemaUser> getUsersByRole(RoleType roleType) {
+        Optional<Role> roleOptional = roleRepository.findByRole(roleType);
+        if (roleOptional.isEmpty()) {
+            throw new RuntimeException("Role not found: " + roleType);
+        }
+        return userRepository.findByRole(roleOptional.get());
     }
 }

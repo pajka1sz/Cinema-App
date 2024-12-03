@@ -4,6 +4,7 @@ import agh.to.lab.cinema.model.purchases.Purchase;
 import agh.to.lab.cinema.model.rates.MovieRate;
 import agh.to.lab.cinema.model.roles.Role;
 import agh.to.lab.cinema.model.roles.RoleType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
@@ -42,7 +43,7 @@ public class CinemaUser {
 
     public CinemaUser(String username, String password, String email, Role role) {
         this.username = username;
-        this.password = password;
+        this.password = hashPassword(password);
         this.email = email;
         this.role = role;
         this.createdAt = LocalDateTime.now();
@@ -64,8 +65,8 @@ public class CinemaUser {
         return email;
     }
 
-    public RoleType getRoleType() {
-        return (role != null) ? role.getRole() : RoleType.USER;
+    public Role getRole() {
+        return role;
     }
 
     public void setRole(Role role) {
@@ -76,8 +77,7 @@ public class CinemaUser {
         return cinemaUser.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$");
     }
 
-    public static CinemaUser hashPassword(CinemaUser cinemaUser) {
-        cinemaUser.password = BCrypt.hashpw(cinemaUser.password, BCrypt.gensalt());
-        return cinemaUser;
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 }
