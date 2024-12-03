@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -57,7 +59,7 @@ public class AdminController {
 
         List<CinemaUser> users = Arrays.asList(new ObjectMapper().readValue(response.body(), CinemaUser[].class));
         CinemaUser foundUser = null;
-        for (CinemaUser user : users) {
+        for (CinemaUser user: users) {
             if (user.getUsername().equals(deleteUserTextField.getText())) {
                 foundUser = user;
             }
