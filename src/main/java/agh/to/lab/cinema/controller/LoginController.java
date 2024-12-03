@@ -65,7 +65,7 @@ public class LoginController {
                 if (user.getUsername().equals(usernameTextFieldLogin.getText())
                         && new BCryptPasswordEncoder().matches(passwordTextFieldLogin.getText(), user.getPassword())) {
                     System.out.println("FOUND!");
-                    CinemaApp.setCinemaUser(user);
+                    CinemaApp.setLoggedUser(user);
                     CinemaApp.loadView("views/userView.fxml");
                     break;
                 }

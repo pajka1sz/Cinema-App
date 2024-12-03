@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class CinemaApp extends Application {
     private static Stage primaryStage;
-    private static CinemaUser cinemaUser;
+    private static CinemaUser loggedUser;
 
     @Override
     public void start(Stage primaryStage) {
@@ -39,11 +39,11 @@ public class CinemaApp extends Application {
         }
     }
 
-    public static void setCinemaUser(CinemaUser cinemaUser) {
-        CinemaApp.cinemaUser = cinemaUser;
+    public static void setLoggedUser(CinemaUser loggedUser) {
+        CinemaApp.loggedUser = loggedUser;
     }
 
-    public static CinemaUser getCinemaUser() {
-        return cinemaUser;
+    public static CinemaUser getLoggedUser() {
+        return loggedUser;
     }
 }

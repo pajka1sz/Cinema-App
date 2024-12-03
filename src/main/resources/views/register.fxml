@@ -6,6 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.shape.Line?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="agh.to.lab.cinema.controller.RegisterController"
@@ -13,7 +14,8 @@
     <center>
         <!-- Register view -->
         <VBox spacing="10" alignment="CENTER" prefWidth="300" minWidth="400" maxWidth="600">
-            <Label>Register</Label>
+            <Label style="-fx-font-size: 5em; -fx-font-weight: bold">Register</Label>
+            <Line startX="300" endX="550" startY="350" endY="350" stroke="#008c88" strokeWidth="2"/>
             <HBox spacing="10" alignment="CENTER">
                 <VBox spacing="20" alignment="CENTER_RIGHT">
                     <Label>Email:</Label>
@@ -31,7 +33,7 @@
                     <Label fx:id="passwordLabelRegister" visible="false" textFill="red" />
                 </VBox>
             </HBox>
-            <Button onAction="#sendRegisterPostRequest">Register</Button>
+            <Button onAction="#sendRegisterPostRequest" style="-fx-background-color: #008c88" textFill="white">Register</Button>
             <Label fx:id="successfulRegisterLabel" visible="false" textFill="green">You have been successfully registered!</Label>
             <Button onAction="#goToLogin">Back to login page</Button>
         </VBox>

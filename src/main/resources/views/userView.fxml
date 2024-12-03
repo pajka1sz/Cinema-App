@@ -12,7 +12,8 @@
             minHeight="550.0" minWidth="850.0">
     <center>
         <VBox spacing="10" alignment="CENTER" maxWidth="400">
-            <Label text="Logged user:" />
+            <Label style="-fx-font-size: 4em; -fx-font-weight: bold" fx:id="welcomeUserLabel"/>
+            <Label style="-fx-font-size: 2em" text="Logged user:" />
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <Label text="Username:" />
                 <Label fx:id="usernameLabel" />
@@ -22,6 +23,7 @@
                 <Label fx:id="emailLabel" />
             </HBox>
             <Button onAction="#logOut" text="Log out" />
+            <Button text="Delete account" onAction="#deleteAccount" style="-fx-background-color: #a10000" textFill="white"/>
         </VBox>
     </center>
 </BorderPane>

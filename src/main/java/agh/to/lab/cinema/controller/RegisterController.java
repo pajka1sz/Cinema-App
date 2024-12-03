@@ -66,7 +66,7 @@ public class RegisterController {
                 if (user.getUsername().equals(usernameTextFieldRegister.getText())
                         && user.getEmail().equals(emailTextFieldRegister.getText())) {
                     System.out.println("FOUND!!!");
-                    CinemaApp.setCinemaUser(user);
+                    CinemaApp.setLoggedUser(user);
                     CinemaApp.loadView("views/userView.fxml");
                 }
             }
