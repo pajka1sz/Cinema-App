@@ -24,12 +24,8 @@
                     <Label>Password:</Label>
                 </VBox>
                 <VBox spacing="10" alignment="CENTER">
-                    <TextField fx:id="usernameTextFieldLogin" onKeyTyped="#resetUsernameLabelLogin" />
-                    <PasswordField fx:id="passwordTextFieldLogin" onKeyTyped="#resetPasswordLabelLogin" />
-                </VBox>
-                <VBox spacing="10" alignment="CENTER_LEFT">
-                    <Label fx:id="usernameLabelLogin" visible="false" textFill="red" />
-                    <Label fx:id="passwordLabelLogin" visible="false" textFill="red" />
+                    <TextField fx:id="usernameTextFieldLogin" onKeyTyped="#resetLoginResultLabel" />
+                    <PasswordField fx:id="passwordTextFieldLogin" onKeyTyped="#resetLoginResultLabel" />
                 </VBox>
             </HBox>
             <Button onAction="#sendLoginPostRequest" style="-fx-background-color: #008c88" textFill="white" text="Log in" />

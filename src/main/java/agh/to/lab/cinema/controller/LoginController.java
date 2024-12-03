@@ -24,17 +24,12 @@ public class LoginController {
     @FXML
     PasswordField passwordTextFieldLogin;
     @FXML
-    Label usernameLabelLogin;
-    @FXML
-    Label passwordLabelLogin;
-    @FXML
     Label loginResultLabel;
 
 
     // Login view functions
     @FXML
     private String sendLoginPostRequest() throws Exception {
-        loginResultLabel.setVisible(false);
 
         System.out.println(JsonBodyCreator.createCinemaUserBody(usernameTextFieldLogin.getText(), passwordTextFieldLogin.getText(), "sdfgdd"));
         String url = "http://localhost:8080/api/login";
@@ -89,13 +84,8 @@ public class LoginController {
         CinemaApp.loadView("views/register.fxml");
     }
 
-    // Not used
     @FXML
-    private void resetUsernameLabelLogin() {
-        usernameLabelLogin.setVisible(false);
-    }
-    @FXML
-    private void resetPasswordLabelLogin() {
-        passwordLabelLogin.setVisible(false);
+    private void resetLoginResultLabel() {
+        loginResultLabel.setVisible(false);
     }
 }
