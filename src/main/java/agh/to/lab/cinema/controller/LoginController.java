@@ -31,7 +31,7 @@ public class LoginController {
     @FXML
     private String sendLoginPostRequest() throws Exception {
 
-        System.out.println(JsonBodyCreator.createCinemaUserBody(usernameTextFieldLogin.getText(), passwordTextFieldLogin.getText(), "sdfgdd"));
+        System.out.println(JsonBodyCreator.createCinemaUserBody(usernameTextFieldLogin.getText(), passwordTextFieldLogin.getText(), null));
         String url = "http://localhost:8080/api/login";
 
         HttpClient client = HttpClient.newHttpClient();
@@ -42,7 +42,7 @@ public class LoginController {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println("Response body: " + response.body());
-        System.out.println(usernameTextFieldLogin.getText() + " " + passwordTextFieldLogin.getText());
+
         if (response.body().equals("User logged in")) {
             loginResultLabel.setVisible(true);
             loginResultLabel.setText("You have successfully logged in!");
@@ -59,7 +59,7 @@ public class LoginController {
             for (CinemaUser user: users) {
                 if (user.getUsername().equals(usernameTextFieldLogin.getText())
                         && new BCryptPasswordEncoder().matches(passwordTextFieldLogin.getText(), user.getPassword())) {
-                    System.out.println("FOUND!");
+                    System.out.println("USER FOUND!");
                     CinemaApp.setLoggedUser(user);
                     CinemaApp.loadView("views/userView.fxml");
                     break;

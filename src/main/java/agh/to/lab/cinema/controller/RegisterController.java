@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.awt.Color;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -32,13 +33,15 @@ public class RegisterController {
     @FXML
     Label successfulRegisterLabel;
 
+    // Colors for textFields;
+    Color WHITE = new Color(255, 255, 255);
+    Color RED = new Color(255, 0, 0);
 
     // Register functions
     @FXML
     private String sendRegisterPostRequest() throws Exception {
         if (checkRegisterEmpty())
             return "Empty values";
-        System.out.println(passwordTextFieldRegister.getText() + " " + usernameTextFieldRegister.textProperty().get());
         System.out.println(JsonBodyCreator.createCinemaUserBody(usernameTextFieldRegister.getText(), passwordTextFieldRegister.getText(), emailTextFieldRegister.getText()));
 
         String url = "http://localhost:8080/api/register";
@@ -65,7 +68,7 @@ public class RegisterController {
             for (CinemaUser user: users) {
                 if (user.getUsername().equals(usernameTextFieldRegister.getText())
                         && user.getEmail().equals(emailTextFieldRegister.getText())) {
-                    System.out.println("FOUND!!!");
+                    System.out.println("USER FOUND!!!");
                     CinemaApp.setLoggedUser(user);
                     CinemaApp.loadView("views/userView.fxml");
                 }
@@ -74,14 +77,17 @@ public class RegisterController {
         else if (response.body().equals("Invalid email")) {
             emailLabelRegister.setVisible(true);
             emailLabelRegister.setText("Invalid email");
+            setTextFieldColor(emailTextFieldRegister, RED);
         }
         else if (response.body().equals("Email occupied")) {
             emailLabelRegister.setVisible(true);
             emailLabelRegister.setText("Email already has an account");
+            setTextFieldColor(emailTextFieldRegister, RED);
         }
         else if (response.body().equals("Username not available")) {
             usernameLabelRegister.setVisible(true);
             usernameLabelRegister.setText("Username not available");
+            setTextFieldColor(usernameTextFieldRegister, RED);
         }
         else {
             emailLabelRegister.setVisible(true);
@@ -98,39 +104,50 @@ public class RegisterController {
     }
 
     @FXML
-    private void resetEmailLabelRegister() {
+    private void resetEmailLabelAndTextFieldRegister() {
         emailLabelRegister.setVisible(false);
+        setTextFieldColor(emailTextFieldRegister, WHITE);
     }
 
     @FXML
-    private void resetUsernameLabelRegister() {
+    private void resetUsernameLabelAndTextFieldRegister() {
         usernameLabelRegister.setVisible(false);
+        setTextFieldColor(usernameTextFieldRegister, WHITE);
     }
 
     @FXML
-    private void resetPasswordLabelRegister() {
+    private void resetPasswordLabelAndTextFieldRegister() {
         passwordLabelRegister.setVisible(false);
+        setTextFieldColor(passwordTextFieldRegister, WHITE);
     }
 
     private boolean checkRegisterEmpty() {
-        System.out.println(emailTextFieldRegister.getText() + " " + usernameTextFieldRegister.getText() + " " + passwordTextFieldRegister.getText());
-        System.out.println(emailTextFieldRegister.getText().equals("") + " " + usernameTextFieldRegister.getText().equals("") + " " + passwordTextFieldRegister.getText().equals(""));
         boolean isEmpty = false;
-        if (emailTextFieldRegister.getText().equals("")) {
+        if (emailTextFieldRegister.getText().isBlank()) {
             emailLabelRegister.setVisible(true);
             emailLabelRegister.setText("Email must not be empty!");
+            setTextFieldColor(emailTextFieldRegister, RED);
             isEmpty = true;
         }
-        if (usernameTextFieldRegister.getText().equals("")) {
+        if (usernameTextFieldRegister.getText().isBlank()) {
             usernameLabelRegister.setVisible(true);
             usernameLabelRegister.setText("Username must not be empty!");
+            setTextFieldColor(usernameTextFieldRegister, RED);
             isEmpty = true;
         }
-        if (passwordTextFieldRegister.getText().equals("")) {
+        if (passwordTextFieldRegister.getText().isBlank()) {
             passwordLabelRegister.setVisible(true);
             passwordLabelRegister.setText("Password must not be empty!");
+            setTextFieldColor(passwordTextFieldRegister, RED);
             isEmpty = true;
         }
         return isEmpty;
+    }
+
+    private void setTextFieldColor(TextField textField, Color color) {
+        String hexColor = Integer.toHexString(color.getRGB()).substring(2);
+        if (!color.equals(WHITE))
+            hexColor += "; -fx-opacity: 0.5";
+        textField.setStyle("-fx-control-inner-background: " + "#" + hexColor);
     }
 }
