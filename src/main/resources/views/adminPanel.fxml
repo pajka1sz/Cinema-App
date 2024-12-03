@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.collections.FXCollections?>
+<?import javafx.scene.shape.Line?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
@@ -14,8 +15,10 @@
             fx:controller="agh.to.lab.cinema.controller.AdminController"
             fx:id="window">
     <center>
-        <VBox alignment="TOP_CENTER" spacing="5">
+        <VBox alignment="TOP_CENTER" spacing="15">
             <Label style="-fx-font-size: 6em; -fx-font-weight: bold">Admin Panel</Label>
+            <Line startX="250" endX="600" stroke="#008c88" strokeWidth="2"/>
+            <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Add movie</Label>
             <HBox spacing="10" alignment="CENTER">
                 <Button disable="true">Add movie</Button>
                 <Label>Doesn't work yet!</Label>
@@ -42,6 +45,7 @@
                 <Button onAction="#deleteUser">Delete user</Button>
                 <Label fx:id="deleteUserLabel" visible="false">This user does not exist!</Label>
             </HBox>
+            <Button onAction="#logOut" text="Log out"/>
         </VBox>
     </center>
 

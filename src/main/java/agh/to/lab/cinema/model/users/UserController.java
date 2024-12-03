@@ -36,7 +36,10 @@ public class UserController {
             if (!CinemaUser.validateEmail(user)) {
                 return "Invalid email";
             }
-            CinemaUser createdUser = userService.createUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getRole());
+            CinemaUser createdUser = userService.createUser(user.getUsername(), user.getPassword(), user.getEmail(), RoleType.USER);
+            if (createdUser.getUsername().equals("admin")
+                    && createdUser.getEmail().equals("admin@agh.edu.pl"))
+                createdUser.setRole(userService.getAdminRole());
             userService.addUser(createdUser);
             return "User added";
         } catch (DataIntegrityViolationException e) {

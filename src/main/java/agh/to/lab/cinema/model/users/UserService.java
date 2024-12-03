@@ -32,6 +32,7 @@ public class UserService {
 
     public CinemaUser createUser(String username, String password, String email, RoleType roleType) {
         Optional<Role> roleOptional = roleRepository.findByRole(roleType);
+        System.out.println("TU: " + roleOptional.isEmpty()+ ", " + roleOptional.toString() + ", " + roleOptional.get().toString());
         if (roleOptional.isEmpty()) {
             roleOptional = roleRepository.findByRole(RoleType.USER);
             if (roleOptional.isEmpty()) {
@@ -39,5 +40,10 @@ public class UserService {
             }
         }
         return userRepository.save(new CinemaUser(username, password, email, roleOptional.get()));
+    }
+
+    public Role getAdminRole() {
+        return roleRepository.findByRole(RoleType.ADMIN)
+                .orElseThrow(() -> new RuntimeException("Admin role not found"));
     }
 }

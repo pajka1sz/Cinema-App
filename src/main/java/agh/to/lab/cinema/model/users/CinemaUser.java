@@ -64,8 +64,8 @@ public class CinemaUser {
         return email;
     }
 
-    public RoleType getRole() {
-        return (role != null) ? RoleType.ADMIN : RoleType.USER;
+    public RoleType getRoleType() {
+        return (role != null) ? role.getRole() : RoleType.USER;
     }
 
     public void setRole(Role role) {

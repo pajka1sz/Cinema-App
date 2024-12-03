@@ -23,7 +23,7 @@ public class Role {
     }
 
     @JsonValue
-    public String getRole() {
+    public String getRoleToString() {
         return role.name();
     }
 
@@ -32,7 +32,7 @@ public class Role {
         this.role = role;
     }
 
-//    public RoleType getRole() {
-//        return role;
-//    }
+    public RoleType getRole() {
+        return role;
+    }
 }
