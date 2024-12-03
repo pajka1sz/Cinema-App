@@ -1,6 +1,7 @@
 package agh.to.lab.cinema.controller;
 
 import agh.to.lab.cinema.app.CinemaApp;
+import agh.to.lab.cinema.model.roles.RoleType;
 import agh.to.lab.cinema.model.users.CinemaUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
@@ -55,13 +56,15 @@ public class LoginController {
                     .GET()
                     .build();
             HttpResponse<String> getUsersResponse = client.send(getUsersRequest, HttpResponse.BodyHandlers.ofString());
+            System.out.println("Users response: " + getUsersResponse.body());
             List<CinemaUser> users = Arrays.asList(new ObjectMapper().readValue(getUsersResponse.body(), CinemaUser[].class));
             for (CinemaUser user: users) {
                 if (user.getUsername().equals(usernameTextFieldLogin.getText())
                         && new BCryptPasswordEncoder().matches(passwordTextFieldLogin.getText(), user.getPassword())) {
                     System.out.println("USER FOUND!");
                     CinemaApp.setLoggedUser(user);
-                    CinemaApp.loadView("views/userView.fxml");
+                    String loadedView = user.getRoleType().equals(RoleType.ADMIN) ? "views/adminPanel.fxml" : "views/userView.fxml";
+                    CinemaApp.loadView(loadedView);
                     break;
                 }
             }

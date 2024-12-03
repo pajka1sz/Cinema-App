@@ -1,5 +1,6 @@
 package agh.to.lab.cinema.model.users;
 
+import agh.to.lab.cinema.model.roles.RoleType;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class UserController {
 
     @PostMapping("/add_test")
     public String addTestUser() {
-        CinemaUser kowalski = new CinemaUser("test2", "test", "test2");
+        CinemaUser kowalski = userService.createUser("test2", "test", "test2", RoleType.USER);
         userService.addUser(kowalski);
         return "User added";
     }
@@ -31,10 +32,15 @@ public class UserController {
     @PostMapping(value = "/register", consumes = "application/json")
     public String registerUser(@RequestBody CinemaUser user) {
         try {
+            System.out.println(user);
             if (!CinemaUser.validateEmail(user)) {
                 return "Invalid email";
             }
-            userService.addUser(user);
+            CinemaUser createdUser = userService.createUser(user.getUsername(), user.getPassword(), user.getEmail(), RoleType.USER);
+            if (createdUser.getUsername().equals("admin")
+                    && createdUser.getEmail().equals("admin@agh.edu.pl"))
+                createdUser.setRole(userService.getAdminRole());
+            userService.addUser(createdUser);
             return "User added";
         } catch (DataIntegrityViolationException e) {
             System.out.println(e.getMessage().contains("username") + " " + e.getMessage().contains("email"));

@@ -3,6 +3,7 @@ package agh.to.lab.cinema.model.users;
 import agh.to.lab.cinema.model.purchases.Purchase;
 import agh.to.lab.cinema.model.rates.MovieRate;
 import agh.to.lab.cinema.model.roles.Role;
+import agh.to.lab.cinema.model.roles.RoleType;
 import jakarta.persistence.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
@@ -61,6 +62,14 @@ public class CinemaUser {
 
     public String getEmail() {
         return email;
+    }
+
+    public RoleType getRoleType() {
+        return (role != null) ? role.getRole() : RoleType.USER;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public static boolean validateEmail(CinemaUser cinemaUser) {
