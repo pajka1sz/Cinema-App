@@ -1,5 +1,7 @@
 package agh.to.lab.cinema.model.roles;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum RoleType {
     ADMIN("ADMIN"),
     USER("USER");
@@ -12,5 +14,10 @@ public enum RoleType {
 
     public String getRoleName() {
         return roleName;
+    }
+
+    @JsonCreator
+    public static RoleType fromString(String roleName) {
+        return RoleType.valueOf(roleName.toUpperCase());
     }
 }

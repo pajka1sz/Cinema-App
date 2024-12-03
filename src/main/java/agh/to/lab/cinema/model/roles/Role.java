@@ -1,5 +1,7 @@
 package agh.to.lab.cinema.model.roles;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,11 +17,22 @@ public class Role {
 
     }
 
+    @JsonCreator
+    public Role(String role) {
+        this.role = RoleType.valueOf(role.toUpperCase());
+    }
+
+    @JsonValue
+    public String getRole() {
+        return role.name();
+    }
+
+
     public Role(RoleType role) {
         this.role = role;
     }
 
-    public RoleType getRole() {
-        return role;
-    }
+//    public RoleType getRole() {
+//        return role;
+//    }
 }

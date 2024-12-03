@@ -65,8 +65,11 @@ public class CinemaUser {
     }
 
     public RoleType getRole() {
-        if (role == null) { return RoleType.USER; }
-        return role.getRole();
+        return (role != null) ? RoleType.ADMIN : RoleType.USER;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public static boolean validateEmail(CinemaUser cinemaUser) {

@@ -60,6 +60,7 @@ public class LoginController {
                     .GET()
                     .build();
             HttpResponse<String> getUsersResponse = client.send(getUsersRequest, HttpResponse.BodyHandlers.ofString());
+            System.out.println("Users response: " + getUsersResponse.body());
             List<CinemaUser> users = Arrays.asList(new ObjectMapper().readValue(getUsersResponse.body(), CinemaUser[].class));
             for (CinemaUser user: users) {
                 if (user.getUsername().equals(usernameTextFieldLogin.getText())
