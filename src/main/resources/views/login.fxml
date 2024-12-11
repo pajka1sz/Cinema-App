@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            minHeight="550.0" minWidth="850.0"
+            styleClass="gallery-pane"
+            fx:controller="agh.to.lab.cinema.controller.LoginController"
+            fx:id="window">
+    <center>
+        <!-- Primary view -->
+        <VBox spacing="10" alignment="CENTER" prefWidth="300" minWidth="400" maxWidth="600">
+            <Label style="-fx-font-size: 3.5em; -fx-font-weight: bold">Welcome to PapajeCinema!</Label>
+            <Line startX="300" endX="550" stroke="#008c88" strokeWidth="2"/>
+            <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Login</Label>
+            <HBox spacing="10" alignment="CENTER">
+                <VBox spacing="20" alignment="CENTER_RIGHT">
+                    <Label>Username:</Label>
+                    <Label>Password:</Label>
+                </VBox>
+                <VBox spacing="10" alignment="CENTER">
+                    <TextField fx:id="usernameTextFieldLogin" onKeyTyped="#resetLoginResultLabel" />
+                    <PasswordField fx:id="passwordTextFieldLogin" onKeyTyped="#resetLoginResultLabel" />
+                </VBox>
+            </HBox>
+            <Button onAction="#sendLoginPostRequest" style="-fx-background-color: #008c88" textFill="white" text="Log in" />
+            <Label fx:id="loginResultLabel" visible="false" />
+            <Line startX="300" endX="550" startY="350" endY="350" stroke="#008c88" strokeWidth="2"/>
+            <Label>You don't have an account?</Label>
+            <Button onAction="#goToRegister" text="Sign up" />
+        </VBox>
+    </center>
+</BorderPane>

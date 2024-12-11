@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.shape.Line?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            minHeight="550.0" minWidth="850.0"
+            styleClass="gallery-pane"
+            fx:controller="agh.to.lab.cinema.controller.AdminController"
+            fx:id="window">
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="15">
+            <Label style="-fx-font-size: 6em; -fx-font-weight: bold">Admin Panel</Label>
+            <Line startX="250" endX="600" stroke="#008c88" strokeWidth="2"/>
+            <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Add movie</Label>
+            <HBox spacing="10" alignment="CENTER">
+                <Button disable="true">Add movie</Button>
+                <Label>Doesn't work yet!</Label>
+            </HBox>
+            <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Change role</Label>
+            <HBox spacing="10" alignment="CENTER">
+                <TextField style="-fx-prompt-text-fill: gray" fx:id="changeRoleTextField" promptText="Search for user..."/>
+                <ComboBox fx:id="changeRoleComboBox" promptText="Choose role">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="User"/>
+                            <String fx:value="Premium user"/>
+                            <String fx:value="Admin"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <Button disable="true">Change</Button>
+                <Label>Doesn't work yet!</Label>
+                <Label fx:id="changeRoleLabel" visible="false">This user does not exist!</Label>
+            </HBox>
+            <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Delete user</Label>
+            <HBox spacing="10" alignment="CENTER">
+                <TextField fx:id="deleteUserTextField" style="-fx-prompt-text-fill: gray" promptText="Search for user..."/>
+                <Button onAction="#deleteUser">Delete user</Button>
+                <Label fx:id="deleteUserLabel" visible="false">This user does not exist!</Label>
+            </HBox>
+            <Button onAction="#logOut" text="Log out"/>
+        </VBox>
+    </center>
+
+</BorderPane>
