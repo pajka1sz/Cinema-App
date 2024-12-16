@@ -39,4 +39,7 @@ public class Room {
         return capacity;
     }
 
+    public void setCapacity(Integer capacity) {this.capacity = capacity;}
+
+    public void setNumber(Integer number) {this.number = number;}
 }

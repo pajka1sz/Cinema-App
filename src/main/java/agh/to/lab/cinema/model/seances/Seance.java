@@ -59,4 +59,8 @@ public class Seance {
     public float getPrice() {
         return price;
     }
+
+    public void setPrice(float price) {this.price = price;}
+
+    public void setStartDate(LocalDateTime startDate) {this.startDate = startDate;}
 }
