@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/user")
 public class UserController {
     private final UserService userService;
 
