@@ -44,7 +44,7 @@ public class RegisterController {
             return "Empty values";
         System.out.println(JsonBodyCreator.createCinemaUserBody(usernameTextFieldRegister.getText(), passwordTextFieldRegister.getText(), emailTextFieldRegister.getText()));
 
-        String url = "http://localhost:8080/api/register";
+        String url = "http://localhost:8080/user/register";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))

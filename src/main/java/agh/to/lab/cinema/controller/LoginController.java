@@ -31,7 +31,7 @@ public class LoginController {
     private String sendLoginPostRequest() throws Exception {
 
         System.out.println(JsonBodyCreator.createCinemaUserBody(usernameTextFieldLogin.getText(), passwordTextFieldLogin.getText(), null));
-        String url = "http://localhost:8080/api/login";
+        String url = "http://localhost:8080/user/login";
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

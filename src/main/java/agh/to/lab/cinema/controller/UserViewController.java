@@ -40,7 +40,7 @@ public class UserViewController {
         alert.setHeaderText("Are you sure you want to delete this account?");
         ButtonType result = alert.showAndWait().get();
         if (result.equals(ButtonType.OK)) {
-            String baseUrl = "http://localhost:8080/api/delete/";
+            String baseUrl = "http://localhost:8080/user/delete/";
             String deleteUrl = baseUrl.concat(String.valueOf(CinemaApp.getLoggedUser().getId()));
             HttpClient deleteClient = HttpClient.newHttpClient();
             HttpRequest deleteRequest = HttpRequest.newBuilder()

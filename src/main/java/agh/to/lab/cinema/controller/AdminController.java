@@ -46,7 +46,7 @@ public class AdminController {
 
     @FXML
     private String deleteUser() throws Exception {
-        String url = "http://localhost:8080/api";
+        String url = "http://localhost:8080/user";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -68,7 +68,7 @@ public class AdminController {
             alert.setHeaderText("Are you sure you want to delete account of " + foundUser.getUsername() + "?");
             ButtonType result = alert.showAndWait().get();
             if (result.equals(ButtonType.OK)) {
-                String baseUrl = "http://localhost:8080/api/delete/";
+                String baseUrl = "http://localhost:8080/user/delete/";
                 String deleteUrl = baseUrl.concat(String.valueOf(foundUser.getId()));
                 HttpClient deleteClient = HttpClient.newHttpClient();
                 HttpRequest deleteRequest = HttpRequest.newBuilder()
