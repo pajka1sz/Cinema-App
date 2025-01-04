@@ -45,6 +45,10 @@
                 <Button onAction="#deleteUser">Delete user</Button>
                 <Label fx:id="deleteUserLabel" visible="false">This user does not exist!</Label>
             </HBox>
+            <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Add movies, categories, rooms and seances</Label>
+            <HBox spacing="10" alignment="CENTER">
+                <Button onAction="#addTestRecords">Add</Button>
+            </HBox>
             <Button onAction="#logOut" text="Log out"/>
         </VBox>
     </center>

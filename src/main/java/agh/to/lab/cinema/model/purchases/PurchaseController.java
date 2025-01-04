@@ -10,7 +10,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/purchase")
 public class PurchaseController {
-    private PurchaseService purchaseService;
+    private final PurchaseService purchaseService;
 
     public PurchaseController(PurchaseService purchaseService) {
         this.purchaseService = purchaseService;
