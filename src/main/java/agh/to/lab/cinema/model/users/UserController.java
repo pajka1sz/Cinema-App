@@ -16,6 +16,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @RequestMapping(path = "/user")
 public class UserController {
     private final UserService userService;
+    private static final String baseUrl = "http://localhost:8080/user";
+    public static String getBaseUrl() {
+        return baseUrl;
+    }
 
     public UserController(UserService userService) {
         this.userService = userService;

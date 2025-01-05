@@ -1,12 +1,13 @@
-package agh.to.lab.cinema.model.movies;
+package agh.to.lab.cinema.restController;
 
+import agh.to.lab.cinema.model.movies.Movie;
+import agh.to.lab.cinema.model.movies.MovieDTO;
+import agh.to.lab.cinema.model.movies.MovieService;
 import agh.to.lab.cinema.model.types.MovieType;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.model.types.TypeService;
-import agh.to.lab.cinema.model.users.CinemaUser;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,6 +18,10 @@ public class MovieController {
 
     private final MovieService movieService;
     private final TypeService typeService;
+    private static final String baseUrl = "http://localhost:8080/movie";
+    public static String getBaseUrl() {
+        return baseUrl;
+    }
 
     public MovieController(MovieService movieService, TypeService typeService) {
         this.movieService = movieService;
@@ -92,7 +97,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Integer id) {
+    public String deleteMovie(@PathVariable Integer id) {
         movieService.deleteMovie(id);
         return "Movie deleted";
     }

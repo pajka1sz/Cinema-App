@@ -12,7 +12,7 @@
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
             styleClass="gallery-pane"
-            fx:controller="agh.to.lab.cinema.controller.AdminController"
+            fx:controller="agh.to.lab.cinema.viewController.AdminController"
             fx:id="window">
     <center>
         <VBox alignment="TOP_CENTER" spacing="15">

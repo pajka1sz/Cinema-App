@@ -1,10 +1,13 @@
-package agh.to.lab.cinema.controller;
+package agh.to.lab.cinema.viewController;
 
 import agh.to.lab.cinema.app.CinemaApp;
 import agh.to.lab.cinema.model.roles.RoleType;
 import agh.to.lab.cinema.model.types.MovieType;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.model.users.CinemaUser;
+import agh.to.lab.cinema.model.users.UserController;
+import agh.to.lab.cinema.restController.MovieController;
+import agh.to.lab.cinema.restController.RoomController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,7 +53,7 @@ public class AdminController {
 
     @FXML
     private String deleteUser() throws Exception {
-        String url = "http://localhost:8080/user";
+        String url = UserController.getBaseUrl();
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -72,7 +75,7 @@ public class AdminController {
             alert.setHeaderText("Are you sure you want to delete account of " + foundUser.getUsername() + "?");
             ButtonType result = alert.showAndWait().get();
             if (result.equals(ButtonType.OK)) {
-                String baseUrl = "http://localhost:8080/user/delete/";
+                String baseUrl = url + "/delete/";
                 String deleteUrl = baseUrl.concat(String.valueOf(foundUser.getId()));
                 HttpClient deleteClient = HttpClient.newHttpClient();
                 HttpRequest deleteRequest = HttpRequest.newBuilder()
@@ -106,7 +109,7 @@ public class AdminController {
 
     @FXML
     private String addTestRecords() throws Exception{
-        String url = "http://localhost:8080/movie/add";
+        String url = MovieController.getBaseUrl() + "/add";
         HttpClient client = HttpClient.newHttpClient();
         Set<Type> movieTypes = new HashSet<>();
         movieTypes.add(new Type(MovieType.COMEDY));
@@ -120,7 +123,7 @@ public class AdminController {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
 
-        String url2 = "http://localhost:8080/room/add";
+        String url2 = RoomController.getBaseUrl() + "/add";
         HttpClient client2 = HttpClient.newHttpClient();
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(URI.create(url2))

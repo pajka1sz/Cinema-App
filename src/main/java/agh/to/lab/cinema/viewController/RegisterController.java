@@ -1,8 +1,8 @@
-package agh.to.lab.cinema.controller;
+package agh.to.lab.cinema.viewController;
 
 import agh.to.lab.cinema.app.CinemaApp;
-import agh.to.lab.cinema.model.roles.RoleType;
 import agh.to.lab.cinema.model.users.CinemaUser;
+import agh.to.lab.cinema.model.users.UserController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -44,7 +44,7 @@ public class RegisterController {
             return "Empty values";
         System.out.println(JsonBodyCreator.createCinemaUserBody(usernameTextFieldRegister.getText(), passwordTextFieldRegister.getText(), emailTextFieldRegister.getText()));
 
-        String url = "http://localhost:8080/user/register";
+        String url = UserController.getBaseUrl() + "/register";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))

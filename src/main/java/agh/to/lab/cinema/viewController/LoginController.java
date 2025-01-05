@@ -1,8 +1,9 @@
-package agh.to.lab.cinema.controller;
+package agh.to.lab.cinema.viewController;
 
 import agh.to.lab.cinema.app.CinemaApp;
 import agh.to.lab.cinema.model.roles.RoleType;
 import agh.to.lab.cinema.model.users.CinemaUser;
+import agh.to.lab.cinema.model.users.UserController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -31,7 +32,7 @@ public class LoginController {
     private String sendLoginPostRequest() throws Exception {
 
         System.out.println(JsonBodyCreator.createCinemaUserBody(usernameTextFieldLogin.getText(), passwordTextFieldLogin.getText(), null));
-        String url = "http://localhost:8080/user/login";
+        String url = UserController.getBaseUrl() + "/login";
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

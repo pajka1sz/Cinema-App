@@ -10,7 +10,7 @@
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
             styleClass="gallery-pane"
-            fx:controller="agh.to.lab.cinema.controller.LoginController"
+            fx:controller="agh.to.lab.cinema.viewController.LoginController"
             fx:id="window">
     <center>
         <!-- Primary view -->

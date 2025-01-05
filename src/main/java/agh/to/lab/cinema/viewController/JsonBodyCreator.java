@@ -1,4 +1,4 @@
-package agh.to.lab.cinema.controller;
+package agh.to.lab.cinema.viewController;
 import agh.to.lab.cinema.model.movies.Movie;
 import agh.to.lab.cinema.model.rooms.Room;
 import agh.to.lab.cinema.model.seances.Seance;

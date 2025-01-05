@@ -1,6 +1,7 @@
-package agh.to.lab.cinema.controller;
+package agh.to.lab.cinema.viewController;
 
 import agh.to.lab.cinema.app.CinemaApp;
+import agh.to.lab.cinema.model.users.UserController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -40,7 +41,7 @@ public class UserViewController {
         alert.setHeaderText("Are you sure you want to delete this account?");
         ButtonType result = alert.showAndWait().get();
         if (result.equals(ButtonType.OK)) {
-            String baseUrl = "http://localhost:8080/user/delete/";
+            String baseUrl = UserController.getBaseUrl() + "/delete/";
             String deleteUrl = baseUrl.concat(String.valueOf(CinemaApp.getLoggedUser().getId()));
             HttpClient deleteClient = HttpClient.newHttpClient();
             HttpRequest deleteRequest = HttpRequest.newBuilder()

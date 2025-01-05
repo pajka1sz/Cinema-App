@@ -1,5 +1,8 @@
-package agh.to.lab.cinema.model.seances;
+package agh.to.lab.cinema.restController;
 
+import agh.to.lab.cinema.model.seances.Seance;
+import agh.to.lab.cinema.model.seances.SeanceDTO;
+import agh.to.lab.cinema.model.seances.SeanceService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -10,6 +13,10 @@ import java.util.List;
 public class SeanceController {
 
     private final SeanceService seanceService;
+    private static final String baseUrl = "http://localhost:8080/seance";
+    public static String getBaseUrl() {
+        return baseUrl;
+    }
 
     public SeanceController(SeanceService seanceService) {
         this.seanceService = seanceService;

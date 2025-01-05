@@ -1,5 +1,8 @@
-package agh.to.lab.cinema.model.purchases;
+package agh.to.lab.cinema.restController;
 
+import agh.to.lab.cinema.model.purchases.Purchase;
+import agh.to.lab.cinema.model.purchases.PurchaseDTO;
+import agh.to.lab.cinema.model.purchases.PurchaseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +14,10 @@ import java.util.Optional;
 @RequestMapping(path = "/purchase")
 public class PurchaseController {
     private final PurchaseService purchaseService;
+    private static final String baseUrl = "http://localhost:8080/purchase";
+    public static String getBaseUrl() {
+        return baseUrl;
+    }
 
     public PurchaseController(PurchaseService purchaseService) {
         this.purchaseService = purchaseService;
