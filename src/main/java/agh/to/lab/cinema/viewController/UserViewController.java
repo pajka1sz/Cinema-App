@@ -1,7 +1,7 @@
 package agh.to.lab.cinema.viewController;
 
 import agh.to.lab.cinema.app.CinemaApp;
-import agh.to.lab.cinema.model.users.UserController;
+import agh.to.lab.cinema.restController.UserController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

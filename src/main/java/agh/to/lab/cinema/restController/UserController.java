@@ -1,6 +1,8 @@
-package agh.to.lab.cinema.model.users;
+package agh.to.lab.cinema.restController;
 
 import agh.to.lab.cinema.model.roles.RoleType;
+import agh.to.lab.cinema.model.users.CinemaUser;
+import agh.to.lab.cinema.model.users.UserService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

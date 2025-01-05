@@ -5,7 +5,7 @@ import agh.to.lab.cinema.model.roles.RoleType;
 import agh.to.lab.cinema.model.types.MovieType;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.model.users.CinemaUser;
-import agh.to.lab.cinema.model.users.UserController;
+import agh.to.lab.cinema.restController.UserController;
 import agh.to.lab.cinema.restController.MovieController;
 import agh.to.lab.cinema.restController.RoomController;
 import com.fasterxml.jackson.databind.ObjectMapper;

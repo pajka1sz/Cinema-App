@@ -2,7 +2,7 @@ package agh.to.lab.cinema.viewController;
 
 import agh.to.lab.cinema.app.CinemaApp;
 import agh.to.lab.cinema.model.users.CinemaUser;
-import agh.to.lab.cinema.model.users.UserController;
+import agh.to.lab.cinema.restController.UserController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
