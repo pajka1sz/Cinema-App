@@ -3,6 +3,7 @@ package agh.to.lab.cinema.model.movies;
 import agh.to.lab.cinema.model.rates.MovieRate;
 import agh.to.lab.cinema.model.seances.Seance;
 import agh.to.lab.cinema.model.types.Type;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,6 +44,7 @@ public class Movie {
     private List<MovieRate> ratings;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "movie", allowSetters = true)
     private List<Seance> seances;
 
     public Movie() {}

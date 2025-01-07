@@ -26,6 +26,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public CinemaUser getUser(Integer id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found: " + id));
+    }
+
     public void deleteUser(Integer id) {
         userRepository.deleteById(id);
     }

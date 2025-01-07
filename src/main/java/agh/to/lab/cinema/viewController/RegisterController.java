@@ -67,7 +67,7 @@ public class RegisterController {
 
             successfulRegisterLabel.setVisible(true);
             CinemaApp.setLoggedUser(registeredUser);
-            CinemaApp.loadView("views/userView.fxml");
+            CinemaApp.loadView("views/user/userInfo.fxml");
         }
         else if (response.statusCode() == 401) {
             emailLabelRegister.setVisible(true);

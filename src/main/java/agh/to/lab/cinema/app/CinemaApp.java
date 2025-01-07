@@ -1,17 +1,23 @@
 package agh.to.lab.cinema.app;
 
+import agh.to.lab.cinema.model.movies.Movie;
 import agh.to.lab.cinema.model.users.CinemaUser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 import java.io.IOException;
 
 public class CinemaApp extends Application {
+    @Getter
     private static Stage primaryStage;
+    @Getter
     private static CinemaUser loggedUser;
+    @Getter
+    static Movie movie;
 
     @Override
     public void start(Stage primaryStage) {
@@ -39,15 +45,12 @@ public class CinemaApp extends Application {
         }
     }
 
+    public static void setMovie(Movie movie) {
+        CinemaApp.movie = movie;
+    }
+
     public static void setLoggedUser(CinemaUser loggedUser) {
         CinemaApp.loggedUser = loggedUser;
     }
 
-    public static CinemaUser getLoggedUser() {
-        return loggedUser;
-    }
-
-    public static Stage getPrimaryStage() {
-        return primaryStage;
-    }
 }

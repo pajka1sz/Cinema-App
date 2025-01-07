@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="agh.to.lab.cinema.viewController.user.UserDefaultController"
+            minHeight="550.0" minWidth="850.0">
+
+    <top>
+        <Button text="Account Details" onAction="#showAccountDetails" />
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="20.0">
+            <Text style="-fx-font-size: 4em; -fx-font-weight: bold" text="Available movies">
+                <font>
+                    <Font size="24.0" />
+                </font>
+            </Text>
+            <TableView fx:id="movieTable">
+                <columns>
+                    <TableColumn fx:id="thumbnailColumn" sortable="false" text="Thumbnail" />
+                    <TableColumn fx:id="titleColumn" text="Title" />
+                    <TableColumn fx:id="lengthColumn" text="Length" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

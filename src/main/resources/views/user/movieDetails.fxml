@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane minHeight="550.0" minWidth="850.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="agh.to.lab.cinema.viewController.user.UserSeancesController">
+    <top>
+        <VBox alignment="CENTER" spacing="10" style="-fx-alignment: center;">
+            <ImageView fx:id="thumbnail" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="thumbnailLabel" style="-fx-font-size: 2em" />
+            <Text fx:id="movieDescription" style="-fx-font-size: 14px;" />
+        </VBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" maxWidth="400" spacing="10">
+            <Label style="-fx-font-size: 2em" text="Seances:" />
+            <TableView fx:id="seancesTable">
+                <columns>
+                    <TableColumn fx:id="dateColumn" text="Date" />
+                    <TableColumn fx:id="roomColumn" text="Room" />
+                    <TableColumn fx:id="priceColumn" text="Price" />
+                    <TableColumn fx:id="availableSeatsColumn" text="Available seats" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </center>
+    <bottom>
+        <Button onAction="#backToMoviesList" text="Back" />
+    </bottom>
+
+</BorderPane>
