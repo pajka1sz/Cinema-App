@@ -46,4 +46,8 @@ public class CinemaApp extends Application {
     public static CinemaUser getLoggedUser() {
         return loggedUser;
     }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
 }

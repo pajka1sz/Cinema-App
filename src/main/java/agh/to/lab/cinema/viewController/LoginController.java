@@ -58,7 +58,7 @@ public class LoginController {
             loginResultLabel.setTextFill(Color.color(0, 1.0, 0));
 
             CinemaApp.setLoggedUser(user);
-            String loadedView = user.getRole().getRole().equals(RoleType.ADMIN) ? "views/adminPanel.fxml" : "views/userView.fxml";
+            String loadedView = user.getRole().getRole().equals(RoleType.ADMIN) ? "views/admin/adminUsersPanel.fxml" : "views/userView.fxml";
             CinemaApp.loadView(loadedView);
         }
         else {

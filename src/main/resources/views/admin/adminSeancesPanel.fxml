@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.shape.Line?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            minHeight="550.0" minWidth="850.0"
+            styleClass="gallery-pane"
+            fx:controller="agh.to.lab.cinema.viewController.admin.AdminSeancesController"
+            fx:id="window">
+    <top>
+        <VBox alignment="TOP_CENTER" spacing="15">
+            <Label style="-fx-font-size: 6em; -fx-font-weight: bold">Admin Panel</Label>
+            <Line startX="150" endX="700" stroke="#008c88" strokeWidth="2"/>
+        </VBox>
+    </top>
+    <left>
+        <VBox alignment="TOP_CENTER" spacing="3" minWidth="150" maxWidth="200" style="-fx-font-size: 1.5em;">
+            <Button text="Users" onAction="#getAdminUsersView" prefWidth="130" prefHeight="50" textFill="white" style="-fx-background-color: #008c88"/>
+            <Button text="Movies" onAction="#getAdminMoviesView" prefWidth="130" prefHeight="50" textFill="white" style=" -fx-background-color: #008c88"/>
+            <Button text="Seances" onAction="#getAdminSeancesView" prefWidth="130" prefHeight="50" textFill="white" style=" -fx-background-color: #0094d4"/>
+            <Button text="Purchases" onAction="#getAdminPurchasesView" prefWidth="130" prefHeight="50" textFill="white" style=" -fx-background-color: #008c88"/>
+        </VBox>
+    </left>
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="15" minWidth="650" maxWidth="700" style="-fx-padding: 10 10 0 0">
+            <Label style="-fx-font-size: 4em; -fx-font-weight: bold">To do...</Label>
+        </VBox>
+    </center>
+</BorderPane>

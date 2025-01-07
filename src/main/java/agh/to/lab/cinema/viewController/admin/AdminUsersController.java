@@ -1,13 +1,9 @@
-package agh.to.lab.cinema.viewController;
+package agh.to.lab.cinema.viewController.admin;
 
 import agh.to.lab.cinema.app.CinemaApp;
 import agh.to.lab.cinema.model.roles.RoleType;
-import agh.to.lab.cinema.model.types.MovieType;
-import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.model.users.CinemaUser;
 import agh.to.lab.cinema.restController.UserController;
-import agh.to.lab.cinema.restController.MovieController;
-import agh.to.lab.cinema.restController.RoomController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,12 +15,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-public class AdminController {
+public class AdminUsersController extends AdminController {
     @FXML
     TextField changeRoleTextField;
 
@@ -97,42 +91,6 @@ public class AdminController {
             deleteUserLabel.setVisible(true);
         }
         System.out.println(response.body());
-        return response.body();
-    }
-
-
-    @FXML
-    private void logOut() {
-        CinemaApp.setLoggedUser(null);
-        CinemaApp.loadView("views/login.fxml");
-    }
-
-    @FXML
-    private String addTestRecords() throws Exception{
-        String url = MovieController.getBaseUrl() + "/add";
-        HttpClient client = HttpClient.newHttpClient();
-        Set<Type> movieTypes = new HashSet<>();
-        movieTypes.add(new Type(MovieType.COMEDY));
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(JsonBodyCreator.createMovieBody("Nietykalni",
-                        "Sparaliżowany milioner zatrudnia do opieki młodego chłopaka z przedmieścia, który właśnie wyszedł z więzienia.", 112,
-                        "https://www.monolith.pl/wp-content/uploads/2021/07/nietykalni-nietykalni.jpg", movieTypes)))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-
-        String url2 = RoomController.getBaseUrl() + "/add";
-        HttpClient client2 = HttpClient.newHttpClient();
-        HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(URI.create(url2))
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(JsonBodyCreator.createRoomBody(4, 100)))
-                .build();
-        HttpResponse<String> response2 = client2.send(request2, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response2.body());
-
         return response.body();
     }
 

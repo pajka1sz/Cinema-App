@@ -1,6 +1,7 @@
 package agh.to.lab.cinema.model.types;
 
 import agh.to.lab.cinema.model.movies.Movie;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -17,6 +18,7 @@ public class Type {
     private MovieType movieType;
 
     @ManyToMany(mappedBy = "types")
+    @JsonIgnore
     private Set<Movie> movies = new HashSet<>();
 
     public Type () {}
