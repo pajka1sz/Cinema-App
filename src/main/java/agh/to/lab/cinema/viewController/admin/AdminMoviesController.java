@@ -71,10 +71,20 @@ public class AdminMoviesController extends AdminController {
     @FXML
     private void editMovie() {
         //editingTable.setVisible(true);
+        Movie movie = adminMoviesTable.getSelectionModel().getSelectedItem();
+        showMovieEditAndAddDialog(movie);
     }
 
     @FXML
     private void addMovie() {
         //editingTable.setVisible(true);
+        Movie movie = new Movie();
+        if (showMovieEditAndAddDialog(movie)) {
+            try {
+                initialize();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

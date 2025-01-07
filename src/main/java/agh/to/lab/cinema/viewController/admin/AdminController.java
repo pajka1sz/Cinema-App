@@ -1,12 +1,20 @@
 package agh.to.lab.cinema.viewController.admin;
 
 import agh.to.lab.cinema.app.CinemaApp;
+import agh.to.lab.cinema.model.movies.Movie;
 import agh.to.lab.cinema.model.types.MovieType;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.restController.MovieController;
 import agh.to.lab.cinema.restController.RoomController;
 import agh.to.lab.cinema.viewController.JsonBodyCreator;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -70,4 +78,29 @@ public abstract class AdminController {
         CinemaApp.loadView("views/admin/adminPurchasesPanel.fxml");
     }
 
+
+    public boolean showMovieEditAndAddDialog(Movie movie) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(AdminController.class.getClassLoader().getResource("views/admin/movieEditOrAddDialog.fxml"));
+            BorderPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit or add movie");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(CinemaApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            AdminEditOrAddMoviePresenter presenter = loader.getController();
+            presenter.setDialogStage(dialogStage);
+            presenter.setData(movie);
+
+            dialogStage.showAndWait();
+            return presenter.isApproved();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
