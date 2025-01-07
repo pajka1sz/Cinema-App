@@ -52,11 +52,12 @@ public class JsonBodyCreator {
                 .toString();
     }
 
-    public static String createPurchaseBody(CinemaUser user, Seance seance) {
+    public static String createPurchaseBody(CinemaUser user, Seance seance, int numberOfTickets) {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.createObjectNode()
-                .put("user", user.getUsername())
+                .put("user", user.getId())
                 .put("seance", seance.getId())
+                .put("numberOfTickets", numberOfTickets)
                 .toString();
     }
 }

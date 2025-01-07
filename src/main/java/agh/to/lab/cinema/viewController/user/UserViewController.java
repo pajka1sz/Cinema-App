@@ -1,7 +1,8 @@
-package agh.to.lab.cinema.viewController;
+package agh.to.lab.cinema.viewController.user;
 
 import agh.to.lab.cinema.app.CinemaApp;
 import agh.to.lab.cinema.restController.UserController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -56,5 +57,9 @@ public class UserViewController {
             return deleteResponse.body();
         }
         return null;
+    }
+
+    public void showMoviesList(ActionEvent actionEvent) {
+        CinemaApp.loadView("views/user/userDefault.fxml");
     }
 }

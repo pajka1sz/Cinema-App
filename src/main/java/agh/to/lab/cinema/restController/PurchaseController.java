@@ -3,6 +3,10 @@ package agh.to.lab.cinema.restController;
 import agh.to.lab.cinema.model.purchases.Purchase;
 import agh.to.lab.cinema.model.purchases.PurchaseDTO;
 import agh.to.lab.cinema.model.purchases.PurchaseService;
+import agh.to.lab.cinema.model.seances.Seance;
+import agh.to.lab.cinema.model.seances.SeanceService;
+import agh.to.lab.cinema.model.users.CinemaUser;
+import agh.to.lab.cinema.model.users.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +18,17 @@ import java.util.Optional;
 @RequestMapping(path = "/purchase")
 public class PurchaseController {
     private final PurchaseService purchaseService;
+    private final UserService userService;
+    private final SeanceService seanceService;
     private static final String baseUrl = "http://localhost:8080/purchase";
     public static String getBaseUrl() {
         return baseUrl;
     }
 
-    public PurchaseController(PurchaseService purchaseService) {
+    public PurchaseController(PurchaseService purchaseService, UserService userService, SeanceService seanceService) {
         this.purchaseService = purchaseService;
+        this.userService = userService;
+        this.seanceService = seanceService;
     }
 
     @GetMapping
@@ -45,16 +53,18 @@ public class PurchaseController {
 
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Optional<Purchase>> addPurchase(@RequestBody PurchaseDTO purchaseDTO) {
-        List<Purchase> purchasesAlreadyMade = purchaseService.getPurchasesOfSeance(purchaseDTO.getSeance().getId());
-        // Room full
-        if (purchasesAlreadyMade.size() >= purchaseDTO.getSeance().getRoom().getCapacity())
-            return new ResponseEntity<>(Optional.empty(), HttpStatus.valueOf(405));
+        CinemaUser user = userService.getUser(purchaseDTO.getUser_id());
+        if (user == null) {
+            return new ResponseEntity<>(Optional.empty(), HttpStatus.BAD_REQUEST);
+        }
+        Seance seance = seanceService.getSeance(purchaseDTO.getSeance_id());
         Purchase purchase = new Purchase(
-                purchaseDTO.getUser(),
-                purchaseDTO.getSeance()
+                purchaseDTO.getNumberOfTickets(),
+                user,
+                seance
         );
         purchaseService.addPurchase(purchase);
-        return new ResponseEntity<>(Optional.of(purchase), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/delete/{id}", consumes = "application/json")
