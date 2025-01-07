@@ -4,6 +4,7 @@ import agh.to.lab.cinema.model.rooms.Room;
 import agh.to.lab.cinema.model.seances.Seance;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.model.users.CinemaUser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
@@ -59,5 +60,18 @@ public class JsonBodyCreator {
                 .put("seance", seance.getId())
                 .put("numberOfTickets", numberOfTickets)
                 .toString();
+    }
+
+    public static String createMovieTypesBody(Set<Type> movieTypes) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<String> movieTypesString = movieTypes.stream()
+                .map(Type::toString)
+                .toList();
+        try {
+            return objectMapper.writeValueAsString(movieTypesString);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

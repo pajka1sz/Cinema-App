@@ -49,23 +49,8 @@
             <HBox alignment="TOP_CENTER" spacing="15">
                 <Button fx:id="editMovieButton" minWidth="75.0" onAction="#editMovie">Edit</Button>
                 <Button minWidth="75.0" onAction="#addMovie">Add</Button>
+                <Button fx:id="deleteMovieButton" minWidth="75.0" onAction="#deleteMovies">Delete</Button>
             </HBox>
-<!--            <HBox fx:id="editingTable" alignment="TOP_CENTER" spacing="5" maxHeight="100.0" visible="false">-->
-<!--                <VBox alignment="TOP_RIGHT" maxHeight="50.0">-->
-<!--                    <Label text="Title:" />-->
-<!--                    <Label text="Description:" />-->
-<!--                    <Label text="Length:" />-->
-<!--                    <Label text="Thumbnail:" />-->
-<!--                    <Label text="Types:" />-->
-<!--                </VBox>-->
-<!--                <VBox maxHeight="50.0">-->
-<!--                    <TextField fx:id="movieTitleTextField" minWidth="200.0" />-->
-<!--                    <TextField fx:id="movieDescriptionTextField" minWidth="200.0" />-->
-<!--                    <TextField fx:id="movieLengthTextField" minWidth="200.0" />-->
-<!--                    <TextField fx:id="movieThumbnailTextField" minWidth="200.0" />-->
-<!--                    <TextField fx:id="movieTypesTextField" minWidth="200.0" />-->
-<!--                </VBox>-->
-<!--            </HBox>-->
             <Button onAction="#logOut" text="Log out"/>
         </VBox>
     </center>

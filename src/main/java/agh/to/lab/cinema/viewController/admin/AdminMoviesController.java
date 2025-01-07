@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -19,6 +20,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 import java.util.Set;
 
 public class AdminMoviesController extends AdminController {
@@ -39,9 +41,9 @@ public class AdminMoviesController extends AdminController {
     // Buttons
     @FXML
     private Button editMovieButton;
+    @FXML
+    private Button deleteMovieButton;
 
-    //@FXML
-    //private HBox editingTable;
 
     @FXML
     private void initialize() throws IOException, InterruptedException {
@@ -54,9 +56,9 @@ public class AdminMoviesController extends AdminController {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         ObservableList<Movie> movies = FXCollections.observableArrayList(new ObjectMapper().readValue(response.body(), Movie[].class));
-        System.out.println(movies.get(0));
-        System.out.println(movies.size());
         System.out.println(response.body());
+
+        adminMoviesTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         movieTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         movieDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -65,19 +67,25 @@ public class AdminMoviesController extends AdminController {
         movieTypes.setCellValueFactory(new PropertyValueFactory<>("types"));
         adminMoviesTable.setItems(movies);
 
-        editMovieButton.disableProperty().bind(Bindings.isEmpty(adminMoviesTable.getSelectionModel().getSelectedItems()));
+        editMovieButton.disableProperty().bind(Bindings.size(
+                adminMoviesTable.getSelectionModel().getSelectedItems()).isNotEqualTo(1));
+        deleteMovieButton.disableProperty().bind(Bindings.isEmpty(adminMoviesTable.getSelectionModel().getSelectedItems()));
     }
 
     @FXML
     private void editMovie() {
-        //editingTable.setVisible(true);
         Movie movie = adminMoviesTable.getSelectionModel().getSelectedItem();
-        showMovieEditAndAddDialog(movie);
+        if (showMovieEditAndAddDialog(movie)) {
+            try {
+                initialize();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
     private void addMovie() {
-        //editingTable.setVisible(true);
         Movie movie = new Movie();
         if (showMovieEditAndAddDialog(movie)) {
             try {
@@ -85,6 +93,33 @@ public class AdminMoviesController extends AdminController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @FXML
+    private void deleteMovies() {
+        List<Movie> moviesToDelete = adminMoviesTable.getSelectionModel().getSelectedItems();
+
+        for (Movie movie: moviesToDelete) {
+            try {
+                String url = MovieController.getBaseUrl() + "/delete/" + movie.getId();
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .header("Accept", "application/json")
+                        .DELETE()
+                        .build();
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                System.out.println(response.body());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            initialize();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
