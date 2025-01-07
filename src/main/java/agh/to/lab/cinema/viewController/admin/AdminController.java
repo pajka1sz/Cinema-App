@@ -2,6 +2,7 @@ package agh.to.lab.cinema.viewController.admin;
 
 import agh.to.lab.cinema.app.CinemaApp;
 import agh.to.lab.cinema.model.movies.Movie;
+import agh.to.lab.cinema.model.rooms.Room;
 import agh.to.lab.cinema.model.types.MovieType;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.restController.MovieController;
@@ -22,11 +23,13 @@ import java.net.http.HttpResponse;
 import java.util.HashSet;
 import java.util.Set;
 
+import static agh.to.lab.cinema.app.CinemaApp.loadView;
+
 public abstract class AdminController {
     @FXML
     private void logOut() {
         CinemaApp.setLoggedUser(null);
-        CinemaApp.loadView("views/login.fxml");
+        loadView("views/login.fxml");
     }
 
     @FXML
@@ -60,22 +63,27 @@ public abstract class AdminController {
 
     @FXML
     private void getAdminUsersView() {
-        CinemaApp.loadView("views/admin/adminUsersPanel.fxml");
+        loadView("views/admin/adminUsersPanel.fxml");
     }
 
     @FXML
     private void getAdminMoviesView() {
-        CinemaApp.loadView("views/admin/adminMoviesPanel.fxml");
+        loadView("views/admin/adminMoviesPanel.fxml");
     }
 
     @FXML
     private void getAdminSeancesView() {
-        CinemaApp.loadView("views/admin/adminSeancesPanel.fxml");
+        loadView("views/admin/adminSeancesPanel.fxml");
     }
 
     @FXML
     private void getAdminPurchasesView() {
-        CinemaApp.loadView("views/admin/adminPurchasesPanel.fxml");
+        loadView("views/admin/adminPurchasesPanel.fxml");
+    }
+
+    @FXML
+    public void getAdminRoomsView() {
+        loadView("views/admin/adminRoomPanel.fxml");
     }
 
 
@@ -95,6 +103,31 @@ public abstract class AdminController {
             AdminEditOrAddMoviePresenter presenter = loader.getController();
             presenter.setDialogStage(dialogStage);
             presenter.setData(movie);
+
+            dialogStage.showAndWait();
+            return presenter.isApproved();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean showRoomEditAndAddDialog(Room room) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(AdminController.class.getClassLoader().getResource("views/admin/roomEditOrAddDialog.fxml"));
+            BorderPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit or add room");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(CinemaApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            AdminEditOrAddRoomPresenter presenter = loader.getController();
+            presenter.setDialogStage(dialogStage);
+            presenter.setData(room);
 
             dialogStage.showAndWait();
             return presenter.isApproved();
