@@ -9,11 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URI;
@@ -64,6 +63,21 @@ public class AdminMoviesController extends AdminController {
         movieDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         movieLength.setCellValueFactory(new PropertyValueFactory<>("length"));
         movieThumbnail.setCellValueFactory(new PropertyValueFactory<>("thumbnail"));
+        movieThumbnail.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String imageUrl, boolean empty) {
+                super.updateItem(imageUrl, empty);
+                if (empty || imageUrl == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    ImageView imageView = new ImageView(new Image(imageUrl, 100, 100, true, true));
+                    imageView.setPreserveRatio(true);
+                    setGraphic(imageView);
+                    setAlignment(javafx.geometry.Pos.CENTER);
+                }
+            }
+        });
         movieTypes.setCellValueFactory(new PropertyValueFactory<>("types"));
         adminMoviesTable.setItems(movies);
 
