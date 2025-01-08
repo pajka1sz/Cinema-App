@@ -51,6 +51,11 @@ public class PurchaseController {
         return purchaseService.getPurchasesOfUser(user_id);
     }
 
+    @GetMapping(value = "/movie_id/{movie_id}")
+    public List<Purchase> getPurchasesOfMovie(@PathVariable Integer movie_id) {
+        return purchaseService.getPurchasesOfMovie(movie_id);
+    }
+
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<Optional<Purchase>> addPurchase(@RequestBody PurchaseDTO purchaseDTO) {
         CinemaUser user = userService.getUser(purchaseDTO.getUser_id());

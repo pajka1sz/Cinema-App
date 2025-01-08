@@ -50,4 +50,15 @@ public class PurchaseService {
         }
         return userPurchases;
     }
+
+    public List<Purchase> getPurchasesOfMovie(Integer movie_id) {
+        List<Purchase> allPurchases = getPurchases();
+        List<Purchase> moviePurchases = new ArrayList<>();
+
+        for (Purchase purchase: allPurchases) {
+            if (purchase.getSeance().getMovie().getId().equals(movie_id))
+                moviePurchases.add(purchase);
+        }
+        return moviePurchases;
+    }
 }

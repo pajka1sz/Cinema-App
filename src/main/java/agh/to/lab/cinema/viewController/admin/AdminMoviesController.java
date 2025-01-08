@@ -1,8 +1,10 @@
 package agh.to.lab.cinema.viewController.admin;
 
 import agh.to.lab.cinema.model.movies.Movie;
+import agh.to.lab.cinema.model.purchases.Purchase;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.restController.MovieController;
+import agh.to.lab.cinema.restController.PurchaseController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -19,6 +21,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -114,24 +117,61 @@ public class AdminMoviesController extends AdminController {
     private void deleteMovies() {
         List<Movie> moviesToDelete = adminMoviesTable.getSelectionModel().getSelectedItems();
 
-        for (Movie movie: moviesToDelete) {
-            try {
-                String url = MovieController.getBaseUrl() + "/delete/" + movie.getId();
-                HttpClient client = HttpClient.newHttpClient();
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(url))
-                        .header("Accept", "application/json")
-                        .DELETE()
-                        .build();
-                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                System.out.println(response.body());
-            } catch (Exception e) {
-                e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete movies");
+        alert.setHeaderText("Are you sure you want to delete these movies?");
+        alert.setContentText("This action will also delete all seances and purchases for these movies.");
+        ButtonType result = alert.showAndWait().get();
+        if (result.equals(ButtonType.OK)) {
+            for (Movie movie: moviesToDelete) {
+                try {
+                    String url = MovieController.getBaseUrl() + "/delete/" + movie.getId();
+                    HttpClient client = HttpClient.newHttpClient();
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create(url))
+                            .header("Accept", "application/json")
+                            .DELETE()
+                            .build();
+                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                    System.out.println(response.body());
+
+                    String purchasesUrl = PurchaseController.getBaseUrl() + "/movie_id/" + movie.getId();
+                    HttpRequest purchasesRequest = HttpRequest.newBuilder()
+                            .uri(URI.create(purchasesUrl))
+                            .header("Content-Type", "application/json")
+                            .GET()
+                            .build();
+                    HttpResponse<String> purchasesResponse = client.send(purchasesRequest, HttpResponse.BodyHandlers.ofString());
+                    List<Purchase> purchases = Arrays.asList(
+                            new ObjectMapper().readValue(purchasesResponse.body(), Purchase[].class));
+
+                    for (Purchase purchase: purchases) {
+                        deletePurchase(purchase.getId());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
         try {
             initialize();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deletePurchase(Long purchase_id) {
+        try {
+            String url = PurchaseController.getBaseUrl() + "/delete/" + purchase_id;
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Content-Type", "application/json")
+                    .DELETE()
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         } catch (Exception e) {
             e.printStackTrace();
         }
