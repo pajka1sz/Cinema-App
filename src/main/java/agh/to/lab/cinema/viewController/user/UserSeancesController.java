@@ -28,6 +28,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserSeancesController {
     @FXML
@@ -59,7 +60,12 @@ public class UserSeancesController {
                 .build();
         HttpResponse<String> response = seanceClient.send(moviesRequest, HttpResponse.BodyHandlers.ofString());
         ObservableList<Seance> seances = FXCollections.observableArrayList(new ObjectMapper().readValue(response.body(), Seance[].class));
-        seancesTable.setItems(seances);
+        System.out.println(seances);
+        seances = FXCollections.observableArrayList(
+                seances.stream()
+                        .filter(seance -> seance.getMovie().getId().equals(CinemaApp.getMovie().getId()))
+                        .toList() // or collect(Collectors.toList())
+        );        seancesTable.setItems(seances);
         seancesTable.setRowFactory(tableView -> {
             TableRow<Seance> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
