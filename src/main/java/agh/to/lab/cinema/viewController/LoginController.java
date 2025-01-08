@@ -5,6 +5,8 @@ import agh.to.lab.cinema.model.roles.RoleType;
 import agh.to.lab.cinema.model.users.CinemaUser;
 import agh.to.lab.cinema.restController.UserController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -48,7 +50,15 @@ public class LoginController {
         // 404 / HttpStatus.NOT_FOUND - user not found
 
         if (response.statusCode() == HttpStatus.OK.value()) {
-            CinemaUser user = new ObjectMapper().readValue(response.body(), CinemaUser.class);
+            CinemaUser user = null;
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.registerModule(new JavaTimeModule());
+                objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                user = objectMapper.readValue(response.body(), CinemaUser.class);
+            }catch (Exception e) {
+                System.out.println("EXCEPTION ERROR " + e.getMessage());
+            }
             System.out.println(user);
 
             System.out.println("User found");

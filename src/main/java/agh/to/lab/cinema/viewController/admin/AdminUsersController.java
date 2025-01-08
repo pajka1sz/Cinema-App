@@ -7,6 +7,8 @@ import agh.to.lab.cinema.model.roles.RoleType;
 import agh.to.lab.cinema.model.users.CinemaUser;
 import agh.to.lab.cinema.restController.UserController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,11 +20,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateTimeStringConverter;
@@ -71,7 +71,10 @@ public class AdminUsersController extends AdminController {
                 .GET().
                 build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        ObservableList<CinemaUser> users = FXCollections.observableArrayList(new ObjectMapper().readValue(response.body(), CinemaUser[].class));
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        ObservableList<CinemaUser> users = FXCollections.observableArrayList(objectMapper.readValue(response.body(), CinemaUser[].class));
 
         userId.setCellValueFactory(new PropertyValueFactory<>("id"));
         userUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
