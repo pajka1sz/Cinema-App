@@ -36,6 +36,7 @@ public class CinemaUser {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieRate> ratings;
 
+    @Getter
     @Column(nullable = false)
     private LocalDateTime createdAt;
 

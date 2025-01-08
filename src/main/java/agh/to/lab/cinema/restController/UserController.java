@@ -1,14 +1,18 @@
 package agh.to.lab.cinema.restController;
 
+import agh.to.lab.cinema.model.roles.Role;
 import agh.to.lab.cinema.model.roles.RoleType;
 import agh.to.lab.cinema.model.users.CinemaUser;
 import agh.to.lab.cinema.model.users.UserService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -72,6 +76,24 @@ public class UserController {
             }
         }
         return new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/update_role/{id}")
+    public String updateUserRole(@PathVariable Integer id, @RequestBody Role role) {
+        try {
+            CinemaUser userToUpdate = userService.getUserById(id);
+            userToUpdate.setRole(role);
+            System.out.println("User " + userToUpdate.getUsername() + " role " + userToUpdate.getRole().getRoleToString());
+            userService.addUser(userToUpdate);
+            System.out.println("User role updated");
+            return "User role updated";
+        } catch (EntityNotFoundException e) {
+            System.out.println("User with id " + id + " not found");
+            return "User with id " + id + " not found";
+        } catch (Exception e) {
+            System.out.println("Error updating user role");
+            return "Error updating user role";
+        }
     }
 
     @DeleteMapping("/delete/{id}")

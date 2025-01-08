@@ -31,7 +31,44 @@
     </left>
     <center>
         <VBox alignment="TOP_CENTER" spacing="15" minWidth="650" maxWidth="700" style="-fx-padding: 10 10 0 0">
-            <Label style="-fx-font-size: 4em; -fx-font-weight: bold">To do...</Label>
+            <HBox spacing="15">
+                <VBox>
+                    <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Movies:</Label>
+                    <TableView fx:id="adminMoviesTable" prefHeight="200.0" maxHeight="250" prefWidth="450.0" maxWidth="500" BorderPane.alignment="CENTER">
+                        <columns>
+                            <TableColumn fx:id="movieThumbnail" prefWidth="90.0" text="Thumbnail" />
+                            <TableColumn fx:id="movieTitle" prefWidth="100.0" text="Title" />
+                            <TableColumn fx:id="movieLength" prefWidth="80.0" text="Length" />
+                            <TableColumn fx:id="movieDescription" prefWidth="150.0" text="Description" />
+                        </columns>
+                    </TableView>
+                </VBox>
+                <VBox>
+                    <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Rooms:</Label>
+                    <TableView fx:id="adminRoomsTable" prefHeight="200.0" maxHeight="250" prefWidth="250.0" maxWidth="300" BorderPane.alignment="CENTER">
+                        <columns>
+                            <TableColumn fx:id="roomNumber" prefWidth="80.0" text="Number" />
+                            <TableColumn fx:id="roomCapacity" prefWidth="80.0" text="Capacity" />
+                        </columns>
+                    </TableView>
+                </VBox>
+            </HBox>
+            <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Seances:</Label>
+            <TableView fx:id="adminSeancesTable" prefHeight="200.0" maxHeight="400" prefWidth="400.0" maxWidth="700" BorderPane.alignment="CENTER">
+                <columns>
+                    <TableColumn fx:id="seanceId" prefWidth="30.0" text="ID" />
+                    <TableColumn fx:id="seanceMovie" prefWidth="100.0" text="Movie" />
+                    <TableColumn fx:id="seanceRoom" prefWidth="50.0" text="Room" />
+                    <TableColumn fx:id="seanceStartDate" prefWidth="150.0" text="Start date" />
+                    <TableColumn fx:id="seancePrice" prefWidth="75.0" text="Price" />
+                </columns>
+            </TableView>
+            <HBox alignment="TOP_CENTER" spacing="15">
+                <Button fx:id="editMovieButton" minWidth="75.0" onAction="#editSeance">Edit</Button>
+                <Button minWidth="75.0" onAction="#addSeance">Add</Button>
+                <Button fx:id="deleteMovieButton" minWidth="75.0" onAction="#deleteSeances">Delete</Button>
+            </HBox>
+            <Button onAction="#logOut" text="Log out"/>
         </VBox>
     </center>
 </BorderPane>
