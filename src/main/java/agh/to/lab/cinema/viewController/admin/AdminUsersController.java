@@ -58,8 +58,6 @@ public class AdminUsersController extends AdminController {
     TableColumn<CinemaUser, String> userRole;
     @FXML
     TableColumn<CinemaUser, String> userCreationDate;
-    @FXML
-    TableColumn<CinemaUser, List<Purchase>> userPurchases;
 
     @FXML
     private void initialize() throws Exception{
@@ -84,7 +82,6 @@ public class AdminUsersController extends AdminController {
         userCreationDate.setCellValueFactory(cellData -> Bindings.createStringBinding(() -> converter.toString(cellData.getValue().getCreatedAt())));
 
         //userCreationDate.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
-        userPurchases.setCellValueFactory(new PropertyValueFactory<>("purchases"));
         adminUsersTable.setItems(users);
 
         List<Role> roles = Arrays.stream(RoleType.values())

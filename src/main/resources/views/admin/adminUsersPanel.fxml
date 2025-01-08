@@ -38,8 +38,7 @@
                             <TableColumn fx:id="userUsername" prefWidth="100.0" text="Username" />
                             <TableColumn fx:id="userEmail" prefWidth="150.0" text="E-mail" />
                             <TableColumn fx:id="userRole" prefWidth="100.0" text="Role" />
-                            <TableColumn fx:id="userCreationDate" prefWidth="90.0" text="Created at" />
-                            <TableColumn fx:id="userPurchases" prefWidth="200.0" text="Purchases" />
+                            <TableColumn fx:id="userCreationDate" text="Created at" />
                         </columns>
                     </TableView>
                     <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Change role</Label>
