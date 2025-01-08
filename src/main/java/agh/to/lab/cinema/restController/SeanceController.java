@@ -1,5 +1,9 @@
 package agh.to.lab.cinema.restController;
 
+import agh.to.lab.cinema.model.movies.Movie;
+import agh.to.lab.cinema.model.movies.MovieService;
+import agh.to.lab.cinema.model.rooms.Room;
+import agh.to.lab.cinema.model.rooms.RoomService;
 import agh.to.lab.cinema.model.seances.Seance;
 import agh.to.lab.cinema.model.seances.SeanceDTO;
 import agh.to.lab.cinema.model.seances.SeanceService;
@@ -13,13 +17,17 @@ import java.util.List;
 public class SeanceController {
 
     private final SeanceService seanceService;
+    private final MovieService movieService;
+    private final RoomService roomService;
     private static final String baseUrl = "http://localhost:8080/seance";
     public static String getBaseUrl() {
         return baseUrl;
     }
 
-    public SeanceController(SeanceService seanceService) {
+    public SeanceController(SeanceService seanceService, MovieService movieService, RoomService roomService) {
         this.seanceService = seanceService;
+        this.movieService = movieService;
+        this.roomService = roomService;
     }
 
     @GetMapping
@@ -34,12 +42,11 @@ public class SeanceController {
 
     @PostMapping(value = "/add", consumes = "application/json")
     public String addSeance(@RequestBody SeanceDTO seanceDTO) {
-        Seance seance = new Seance(
-                seanceDTO.getMovie(),
-                seanceDTO.getRoom(),
-                seanceDTO.getStartDate(),
-                seanceDTO.getPrice()
-        );
+        System.out.println("TUUUU");
+        Movie movie = movieService.getMovie(seanceDTO.getMovie_id());
+        Room room = roomService.getRoom(seanceDTO.getRoom_id());
+        System.out.println(seanceDTO.toString());
+        Seance seance = new Seance(movie, room, seanceDTO.getStartDate(), seanceDTO.getPrice());
         seanceService.addSeance(seance);
         return "Seance added";
     }

@@ -129,6 +129,7 @@ public class UserSeancesController {
                     try {
                         HttpResponse<String> reserveResponse = reserveClient.send(reserveRequest, HttpResponse.BodyHandlers.ofString());
                         System.out.println(reserveResponse.body());
+                        initialize();
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }

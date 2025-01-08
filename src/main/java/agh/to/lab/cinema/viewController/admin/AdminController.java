@@ -3,6 +3,7 @@ package agh.to.lab.cinema.viewController.admin;
 import agh.to.lab.cinema.app.CinemaApp;
 import agh.to.lab.cinema.model.movies.Movie;
 import agh.to.lab.cinema.model.rooms.Room;
+import agh.to.lab.cinema.model.seances.Seance;
 import agh.to.lab.cinema.model.types.MovieType;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.restController.MovieController;
@@ -128,6 +129,31 @@ public abstract class AdminController {
             AdminEditOrAddRoomPresenter presenter = loader.getController();
             presenter.setDialogStage(dialogStage);
             presenter.setData(room);
+
+            dialogStage.showAndWait();
+            return presenter.isApproved();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean showSeanceEditAndAddDialog(Movie movie, Room room) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(AdminController.class.getClassLoader().getResource("views/admin/seanceEditOrAddDialog.fxml"));
+            BorderPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit or add seance");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(CinemaApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            AdminEditOrAddSeancePresenter presenter = loader.getController();
+            presenter.setDialogStage(dialogStage);
+            presenter.setData(movie, room);
 
             dialogStage.showAndWait();
             return presenter.isApproved();

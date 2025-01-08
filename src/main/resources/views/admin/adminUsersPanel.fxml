@@ -31,13 +31,24 @@
         </left>
         <center>
                 <VBox alignment="TOP_CENTER" style="-fx-padding: 10 10 0 0" spacing="15" minWidth="650" maxWidth="700">
+                    <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Users:</Label>
+                    <TableView fx:id="adminUsersTable" prefHeight="250.0" maxHeight="400" prefWidth="500.0" maxWidth="700" BorderPane.alignment="CENTER">
+                        <columns>
+                            <TableColumn fx:id="userId" prefWidth="30.0" text="ID" />
+                            <TableColumn fx:id="userUsername" prefWidth="100.0" text="Username" />
+                            <TableColumn fx:id="userEmail" prefWidth="150.0" text="E-mail" />
+                            <TableColumn fx:id="userRole" prefWidth="100.0" text="Role" />
+                            <TableColumn fx:id="userCreationDate" prefWidth="90.0" text="Created at" />
+                            <TableColumn fx:id="userPurchases" prefWidth="200.0" text="Purchases" />
+                        </columns>
+                    </TableView>
                     <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Change role</Label>
                     <HBox spacing="10" alignment="CENTER">
                         <TextField style="-fx-prompt-text-fill: gray" fx:id="changeRoleTextField" promptText="Search for user..."/>
                         <ComboBox fx:id="changeRoleComboBox" promptText="Choose role" />
-                        <Button disable="true">Change</Button>
+                        <Button onAction="#changeUserRole">Change</Button>
                         <Label>Doesn't work yet!</Label>
-                        <Label fx:id="changeRoleLabel" visible="false">This user does not exist!</Label>
+<!--                        <Label fx:id="changeRoleLabel" visible="false">This user does not exist!</Label>-->
                     </HBox>
                     <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Delete user</Label>
                     <HBox spacing="10" alignment="CENTER">
