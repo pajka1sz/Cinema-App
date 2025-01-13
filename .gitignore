@@ -6,6 +6,8 @@
 .gradle/*
 build/*
 
+cinema.mv.db
+
 # AWS User-specific
 .idea/**/aws.xml
 
