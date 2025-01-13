@@ -1,18 +1,24 @@
 package agh.to.lab.cinema;
 
 import agh.to.lab.cinema.model.movies.MovieDTO;
+import agh.to.lab.cinema.model.types.MovieType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 public class MovieFetcher {
 
     private static final String API_URL = "http://www.omdbapi.com/";
     private static final String API_KEY = "d7f1697c";
 
-    public static MovieDTO getMovieDetails(String movieTitle) throws Exception {
+    public MovieDTO getMovieDetails(String movieTitle) throws Exception {
         OkHttpClient client = new OkHttpClient();
 
         String url = API_URL + "?t=" + movieTitle.replace(" ", "+") + "&apikey=" + API_KEY;
@@ -34,30 +40,19 @@ public class MovieFetcher {
                 throw new RuntimeException("Movie not found: " + jsonNode.get("Error").asText());
             }
 
-            // Parse the JSON response
-            String title = jsonNode.get("Title").asText();
-            String description = jsonNode.get("Plot").asText();
-            String length = jsonNode.get("Runtime").asText();
-            String posterUrl = jsonNode.get("Poster").asText();
-
             MovieDTO movieDTO = new MovieDTO();
-            movieDTO.setDescription(description);
-            movieDTO.setTitle(title);
-            movieDTO.setThumbnail(posterUrl);
-            movieDTO.setLength(Integer.valueOf(length.split(" ")[0]));
-            return movieDTO;
-        }
-    }
+            movieDTO.setDescription(jsonNode.get("Plot").asText());
+            movieDTO.setTitle(jsonNode.get("Title").asText());
+            movieDTO.setLength(Integer.valueOf(jsonNode.get("Runtime").asText().split(" ")[0]));
+            movieDTO.setThumbnail(jsonNode.get("Poster").asText());
+            movieDTO.setTypes(Arrays.stream(jsonNode.get("Genre").asText().split(",\\s*"))
+                    .filter(MovieType::isTypeValid)
+                    .map(MovieType::fromString)
+                    .filter(Objects::nonNull)
+                    .map(MovieType::toString)
+                    .collect(Collectors.toSet()));
 
-    public static void main(String[] args) {
-        try {
-            MovieDTO movie = getMovieDetails("Mustang");
-            System.out.println("Title: " + movie.getTitle());
-            System.out.println("Description: " + movie.getDescription());
-            System.out.println("Length: " + movie.getLength());
-            System.out.println("Poster: " + movie.getThumbnail());
-        } catch (Exception e) {
-            e.printStackTrace();
+            return movieDTO;
         }
     }
 }

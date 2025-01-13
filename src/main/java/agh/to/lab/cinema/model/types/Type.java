@@ -17,7 +17,7 @@ public class Type {
     @Column(nullable = false)
     private MovieType movieType;
 
-    @ManyToMany(mappedBy = "types")
+    @ManyToMany(mappedBy = "types", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Movie> movies = new HashSet<>();
 

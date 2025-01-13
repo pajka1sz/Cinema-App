@@ -1,8 +1,5 @@
 package agh.to.lab.cinema.model.types;
 
-import agh.to.lab.cinema.model.roles.Role;
-import agh.to.lab.cinema.model.roles.RoleRepository;
-import agh.to.lab.cinema.model.roles.RoleType;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
