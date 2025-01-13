@@ -1,4 +1,4 @@
-package agh.to.lab.cinema;
+package agh.to.lab.cinema.utils;
 
 import agh.to.lab.cinema.model.movies.MovieDTO;
 import agh.to.lab.cinema.model.types.MovieType;
@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 

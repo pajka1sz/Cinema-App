@@ -1,6 +1,6 @@
 package agh.to.lab.cinema.model.movies;
 
-import agh.to.lab.cinema.MovieFetcher;
+import agh.to.lab.cinema.utils.MovieFetcher;
 import agh.to.lab.cinema.restController.MovieController;
 import com.opencsv.CSVReader;
 import org.springframework.boot.CommandLineRunner;
