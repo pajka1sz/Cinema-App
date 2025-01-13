@@ -3,6 +3,7 @@ package agh.to.lab.cinema.model.users;
 import agh.to.lab.cinema.model.roles.Role;
 import agh.to.lab.cinema.model.roles.RoleRepository;
 import agh.to.lab.cinema.model.roles.RoleType;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +23,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public CinemaUser getUserById(Integer id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
     public void addUser(CinemaUser user) {
         userRepository.save(user);
+    }
+
+    public CinemaUser getUser(Integer id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found: " + id));
     }
 
     public void deleteUser(Integer id) {

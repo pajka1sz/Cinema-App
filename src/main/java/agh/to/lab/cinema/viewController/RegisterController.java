@@ -1,21 +1,20 @@
-package agh.to.lab.cinema.controller;
+package agh.to.lab.cinema.viewController;
 
 import agh.to.lab.cinema.app.CinemaApp;
-import agh.to.lab.cinema.model.roles.RoleType;
 import agh.to.lab.cinema.model.users.CinemaUser;
+import agh.to.lab.cinema.restController.UserController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.springframework.http.HttpStatus;
 
 import java.awt.Color;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Arrays;
-import java.util.List;
 
 public class RegisterController {
     // Register text fields, labels etc.
@@ -45,7 +44,7 @@ public class RegisterController {
             return "Empty values";
         System.out.println(JsonBodyCreator.createCinemaUserBody(usernameTextFieldRegister.getText(), passwordTextFieldRegister.getText(), emailTextFieldRegister.getText()));
 
-        String url = "http://localhost:8080/api/register";
+        String url = UserController.getBaseUrl() + "/register";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -54,42 +53,36 @@ public class RegisterController {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println("Response body: " + response.body());
+        System.out.println(response.statusCode());
 
-        if (response.body().equals("User added")) {
+        // Response status:
+        // 200 / HttpStatus.OK - user successfully registered
+        // 401 - invalid email
+        // 402 - username occupied
+        // 403 - email occupied
+        // 404 - unknown error
+
+        if (response.statusCode() == HttpStatus.OK.value()) {
+            CinemaUser registeredUser = new ObjectMapper().readValue(response.body(), CinemaUser.class);
+
             successfulRegisterLabel.setVisible(true);
-
-            String getUsersUrl = "http://localhost:8080/api";
-            HttpRequest getUsersRequest = HttpRequest.newBuilder()
-                    .uri(URI.create(getUsersUrl))
-                    .header("Accept", "application/json")
-                    .GET()
-                    .build();
-            HttpResponse<String> getUsersResponse = client.send(getUsersRequest, HttpResponse.BodyHandlers.ofString());
-            List<CinemaUser> users = Arrays.asList(new ObjectMapper().readValue(getUsersResponse.body(), CinemaUser[].class));
-            for (CinemaUser user: users) {
-                if (user.getUsername().equals(usernameTextFieldRegister.getText())
-                        && user.getEmail().equals(emailTextFieldRegister.getText())) {
-                    System.out.println("USER FOUND!!!");
-                    CinemaApp.setLoggedUser(user);
-                    String loadedView = user.getRole().getRole().equals(RoleType.ADMIN) ? "views/adminPanel.fxml" : "views/userView.fxml";
-                    CinemaApp.loadView(loadedView);
-                }
-            }
+            CinemaApp.setLoggedUser(registeredUser);
+            CinemaApp.loadView("views/user/userInfo.fxml");
         }
-        else if (response.body().equals("Invalid email")) {
+        else if (response.statusCode() == 401) {
             emailLabelRegister.setVisible(true);
             emailLabelRegister.setText("Invalid email");
             setTextFieldColor(emailTextFieldRegister, RED);
         }
-        else if (response.body().equals("Email occupied")) {
-            emailLabelRegister.setVisible(true);
-            emailLabelRegister.setText("Email already has an account");
-            setTextFieldColor(emailTextFieldRegister, RED);
-        }
-        else if (response.body().equals("Username not available")) {
+        else if (response.statusCode() == 402) {
             usernameLabelRegister.setVisible(true);
             usernameLabelRegister.setText("Username not available");
             setTextFieldColor(usernameTextFieldRegister, RED);
+        }
+        else if (response.statusCode() == 403) {
+            emailLabelRegister.setVisible(true);
+            emailLabelRegister.setText("Email already has an account");
+            setTextFieldColor(emailTextFieldRegister, RED);
         }
         else {
             emailLabelRegister.setVisible(true);
@@ -97,6 +90,7 @@ public class RegisterController {
             usernameLabelRegister.setVisible(true);
             usernameLabelRegister.setText("UNKNOWN ERROR");
         }
+
         return response.body();
     }
 

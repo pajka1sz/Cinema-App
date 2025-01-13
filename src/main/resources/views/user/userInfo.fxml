@@ -8,7 +8,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="agh.to.lab.cinema.controller.UserViewController"
+            fx:controller="agh.to.lab.cinema.viewController.user.UserViewController"
             minHeight="550.0" minWidth="850.0">
     <center>
         <VBox spacing="10" alignment="CENTER" maxWidth="400">
@@ -22,6 +22,7 @@
                 <Label text="Email:" />
                 <Label fx:id="emailLabel" />
             </HBox>
+            <Button text="Movies list" onAction="#showMoviesList" />
             <Button onAction="#logOut" text="Log out" />
             <Button text="Delete account" onAction="#deleteAccount" style="-fx-background-color: #a10000" textFill="white"/>
         </VBox>

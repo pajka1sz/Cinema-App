@@ -2,18 +2,25 @@ package agh.to.lab.cinema.model.rooms;
 
 import agh.to.lab.cinema.model.seances.Seance;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 public class Room {
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Setter
+    @Getter
+    @Column(nullable = false, unique = true)
     private Integer number;
 
+    @Setter
+    @Getter
     @Column(nullable = false)
     private Integer capacity;
 
@@ -27,16 +34,8 @@ public class Room {
         this.capacity = capacity;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public String toString() {
+        return number.toString();
     }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public Integer getCapacity() {
-        return capacity;
-    }
-
 }

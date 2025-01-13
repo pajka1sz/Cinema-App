@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            minHeight="550.0" minWidth="850.0"
+            styleClass="gallery-pane"
+            fx:controller="agh.to.lab.cinema.viewController.admin.AdminRoomsController"
+            fx:id="window">
+    <top>
+        <VBox alignment="TOP_CENTER" spacing="15">
+            <Label style="-fx-font-size: 6em; -fx-font-weight: bold">Room Management</Label>
+        </VBox>
+    </top>
+    <left>
+        <VBox alignment="TOP_CENTER" spacing="3" minWidth="150" maxWidth="200" style="-fx-font-size: 1.5em;">
+            <Button text="Users" onAction="#getAdminUsersView" prefWidth="130" prefHeight="50" textFill="white" style="-fx-background-color: #008c88"/>
+            <Button text="Movies" onAction="#getAdminMoviesView" prefWidth="130" prefHeight="50" textFill="white" style=" -fx-background-color: #008c88"/>
+            <Button text="Seances" onAction="#getAdminSeancesView" prefWidth="130" prefHeight="50" textFill="white" style=" -fx-background-color: #008c88"/>
+            <Button text="Purchases" onAction="#getAdminPurchasesView" prefWidth="130" prefHeight="50" textFill="white" style=" -fx-background-color: #008c88"/>
+            <Button text="Rooms" onAction="#getAdminRoomsView" prefWidth="130" prefHeight="50" textFill="white" style="-fx-background-color: #0094d4"/>
+        </VBox>
+    </left>
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="15" minWidth="650" maxWidth="700" style="-fx-padding: 10 0 0 0">
+            <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Room List:</Label>
+            <TableView fx:id="roomsTable" prefHeight="200.0" maxHeight="150" prefWidth="500.0" maxWidth="700">
+                <columns>
+                    <TableColumn fx:id="roomNumber" prefWidth="100.0" text="Room Number" />
+                    <TableColumn fx:id="roomCapacity" prefWidth="250.0" text="Capacity" />
+                </columns>
+            </TableView>
+            <HBox alignment="TOP_CENTER" spacing="15">
+                <Button fx:id="editRoomButton" minWidth="75.0" onAction="#editRoom" text="Edit" />
+                <Button fx:id="addRoomButton" minWidth="75.0" onAction="#addRoom" text="Add" />
+                <Button fx:id="deleteRoomButton" minWidth="75.0" onAction="#deleteRoomHandler" text="Delete" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
