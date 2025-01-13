@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Component
 public class MovieInitializer implements CommandLineRunner {
 
-    private static final int NUMBER_OF_MOVIES = 10;
+    private static final int NUMBER_OF_MOVIES = 100;
 
     private final MovieController movieController;
     private final MovieRepository movieRepository;
