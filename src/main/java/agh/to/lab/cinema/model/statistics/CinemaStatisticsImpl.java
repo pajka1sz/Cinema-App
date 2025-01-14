@@ -32,8 +32,18 @@ public class CinemaStatisticsImpl implements CinemaStatisticsFacade{
 
 
     @Override
-    public CinemaUser getMostActiveUser() {
+    public CinemaUser getUserWithMostReservation() {
         return cinemaUserStatisticsProvider.getUserWithMostReservation();
+    }
+
+    @Override
+    public Long getReservationCountByUser(Long userId) {
+        return cinemaUserStatisticsProvider.getReservationCountByUser(userId);
+    }
+
+    @Override
+    public CinemaUser getUserWithHighestSpendings() {
+        return cinemaUserStatisticsProvider.getUserWithHighestSpendings();
     }
 
     @Override
@@ -74,5 +84,10 @@ public class CinemaStatisticsImpl implements CinemaStatisticsFacade{
                         row -> (Room) row[0],
                         row -> (Double) row[1]
                 ));
+    }
+
+    @Override
+    public Room getMostPopularRoom() {
+        return roomStatisticsProvider.getMostPopularRoom();
     }
 }

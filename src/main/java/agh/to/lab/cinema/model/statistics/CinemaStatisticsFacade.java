@@ -13,11 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 public interface CinemaStatisticsFacade {
-    CinemaUser getMostActiveUser();
+    CinemaUser getUserWithMostReservation();
+    Long getReservationCountByUser(Long userId);
+    CinemaUser getUserWithHighestSpendings();
     Double getRevenueFromMovie(Movie movie);
     Map<Movie, Integer> getSumOfTicketsPerMovie();
     List<Type> getTop3MostPopularTypes();
     List<Purchase> findLargePurchases(BigDecimal amount);
     Double getAverageAmountOfTicketsRecently(LocalDateTime start, LocalDateTime end);
     Map<Room, Double> getAverageOccupancyPerRoom();
+    Room getMostPopularRoom();
 }
