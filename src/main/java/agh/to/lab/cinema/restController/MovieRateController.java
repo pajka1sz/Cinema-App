@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/movie_rates")
+@RequestMapping(path = "/movie_rate")
 public class MovieRateController {
     private MovieRateService movieRateService;
     private MovieService movieService;
@@ -24,7 +24,7 @@ public class MovieRateController {
         this.userService = userService;
     }
 
-    @PostMapping(value = "/test")
+    @PostMapping(value = "/add_test")
     public ResponseEntity<String> addTestMovieRates() {
         try {
             MovieRate movieRate = new MovieRate(
@@ -48,7 +48,7 @@ public class MovieRateController {
         }
     }
 
-    @GetMapping(value = "/")
+    @GetMapping()
     public List<MovieRate> getMovieRates() {
         return movieRateService.getMovieRates();
     }
@@ -66,6 +66,13 @@ public class MovieRateController {
 
     @PostMapping(value = "/add")
     public ResponseEntity<String> addMovieRate(@RequestBody MovieRateDTO movieRateDTO) {
+        List<MovieRate> allMovieRates = movieRateService.getMovieRates();
+        for (MovieRate movieRate: allMovieRates) {
+            if (movieRate.getMovie().getId().equals(movieRateDTO.getMovie_id())
+                    && movieRate.getUser().getId().equals(movieRateDTO.getUser_id().longValue()))
+                return new ResponseEntity<>("This user has already given a rate for this film!", HttpStatus.BAD_REQUEST);
+        }
+
         MovieRate rate = new MovieRate(
                 movieService.getMovie(movieRateDTO.getMovie_id()),
                 userService.getUser(movieRateDTO.getUser_id()),

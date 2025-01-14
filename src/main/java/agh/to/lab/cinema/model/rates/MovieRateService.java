@@ -12,10 +12,6 @@ public class MovieRateService {
         this.movieRateRepository = movieRateRepository;
     }
 
-    public MovieRateService() {
-
-    }
-
     public List<MovieRate> getMovieRates() {
         return movieRateRepository.findAll();
     }
