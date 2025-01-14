@@ -15,6 +15,8 @@ import java.util.Random;
 
 @Component
 public class SeanceInitializer implements CommandLineRunner {
+    private static final int NUMBER_OF_SEANCES = 100;
+
     private final SeanceController seanceController;
     private final MovieService movieService;
     private final RoomService roomService;
@@ -39,7 +41,7 @@ public class SeanceInitializer implements CommandLineRunner {
             return;
         }
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < NUMBER_OF_SEANCES; i++) {
             Movie movie = movies.get(random.nextInt(movies.size()));
             Room room = rooms.get(random.nextInt(rooms.size()));
 

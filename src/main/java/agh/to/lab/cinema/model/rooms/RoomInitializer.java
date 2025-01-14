@@ -9,7 +9,7 @@ import java.util.Random;
 @Component
 public class RoomInitializer implements CommandLineRunner {
 
-    private static final int ROOM_NUMBER = 10;
+    private static final int NUMBER_OF_ROOMS = 10;
 
     private final RoomController roomController;
     private final RoomRepository roomRepository;
@@ -22,7 +22,7 @@ public class RoomInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (roomRepository.count() != 0) return;
-        for (int i = 1; i <= ROOM_NUMBER; i++) {
+        for (int i = 1; i <= NUMBER_OF_ROOMS; i++) {
             int capacity = new Random().nextInt(16) * 10 + 50;
             RoomDTO roomDTO = new RoomDTO(i, capacity);
             roomController.addRoom(roomDTO);
