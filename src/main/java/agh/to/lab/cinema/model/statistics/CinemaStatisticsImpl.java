@@ -33,7 +33,7 @@ public class CinemaStatisticsImpl implements CinemaStatisticsFacade{
 
     @Override
     public CinemaUser getMostActiveUser() {
-        return cinemaUserStatisticsProvider.getMostActiveUser();
+        return cinemaUserStatisticsProvider.getUserWithMostReservation();
     }
 
     @Override
