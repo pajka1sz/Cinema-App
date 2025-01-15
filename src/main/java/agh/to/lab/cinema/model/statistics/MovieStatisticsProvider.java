@@ -26,4 +26,40 @@ public interface MovieStatisticsProvider extends JpaRepository<Movie, Long> {
 
     @Query("select t from Type t join t.movies m join m.seances s join s.purchases p group by t order by count(p.numberOfTickets) desc limit 3")
     List<Type> getTop3MostPopularTypes();
+
+    @Query("select avg(mr.rate) from MovieRate mr where mr.movie = :movie")
+    Double getMovieRatesAvg(@Param("movie") Movie movie);
+
+    @Query("select mr.movie, avg(mr.rate) from MovieRate mr group by mr.movie")
+    List<Object[]> getMovieRatesAvgPerMovie();
+
+    @Query("select mr.movie from MovieRate mr group by mr.movie order by count(mr.movie) desc limit 1")
+    Movie getMostRatedMovie();
+
+    @Query(value = "select mr.movie, count(mr.movie) from MovieRate mr group by mr.movie order by count(mr.movie) desc limit 5")
+    List<Object[]> getTop5MostRatedMovies();
+
+    @Query("select mr.movie from MovieRate mr group by mr.movie order by avg(mr.rate) desc limit 1")
+    Movie getBestRatedMovie();
+
+    @Query("select mr.movie from MovieRate mr group by mr.movie order by avg(mr.rate) asc limit 1")
+    Movie getWorstRatedMovie();
+
+    @Query("select mr.movie, avg(mr.rate) from MovieRate mr group by mr.movie order by avg(mr.rate) desc limit 5")
+    List<Object[]> getTop5BestRatedMovies();
+
+    @Query("select mr.movie, avg(mr.rate) from MovieRate mr group by mr.movie order by avg(mr.rate) asc limit 5")
+    List<Object[]> getTop5WorstRatedMovies();
+
+    @Query("select t from Type t join t.movies m join m.ratings mr group by t order by avg(mr.rate) desc limit 1")
+    Type getBestRatedMovieType();
+
+    @Query("select m from Movie m join m.types t join m.ratings mr where t = :type group by m order by avg(mr.rate) desc limit 1")
+    Movie getBestMovieByType(@Param("type") Type type);
+
+    @Query("select m, avg(mr.rate) from Movie m join m.types t join m.ratings mr where t = :type group by m order by avg(mr.rate) desc limit 5")
+    List<Object[]> getTop5BestMoviesByType(@Param("type") Type type);
+
+    @Query("select t, m from Type t join t.movies m join m.ratings mr group by t, m order by avg(mr.rate) desc limit 1")
+    List<Object[]> getBestMoviePerType();
 }

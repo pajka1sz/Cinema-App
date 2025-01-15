@@ -176,7 +176,7 @@ public class AdminSeancesController extends AdminController {
 
         for (Seance seance: seancesToDelete) {
             try {
-                String url = MovieController.getBaseUrl() + "/delete/" + seance.getId();
+                String url = SeanceController.getBaseUrl() + "/delete/" + seance.getId();
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(url))

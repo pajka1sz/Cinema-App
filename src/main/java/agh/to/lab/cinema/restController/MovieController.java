@@ -39,7 +39,7 @@ public class MovieController {
 
     @GetMapping
     public List<Movie> getMovies() {
-        System.out.println(cinemaStatisticsService.getMostActiveUser());
+        System.out.println(cinemaStatisticsService.getUserWithMostReservation());
         return movieService.getMovies();
     }
 

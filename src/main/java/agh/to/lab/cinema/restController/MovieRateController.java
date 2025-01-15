@@ -5,6 +5,7 @@ import agh.to.lab.cinema.model.rates.MovieRate;
 import agh.to.lab.cinema.model.rates.MovieRateDTO;
 import agh.to.lab.cinema.model.rates.MovieRateService;
 import agh.to.lab.cinema.model.users.UserService;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,9 @@ public class MovieRateController {
     private MovieRateService movieRateService;
     private MovieService movieService;
     private UserService userService;
+
+    @Getter
+    private static String baseUrl = "http://localhost:8080/movie_rate";
 
     public MovieRateController(MovieRateService movieRateService, MovieService movieService, UserService userService) {
         this.movieRateService = movieRateService;

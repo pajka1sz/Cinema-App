@@ -21,4 +21,7 @@ public interface CinemaUserStatisticsProvider extends JpaRepository<CinemaUser, 
 
     @Query("select CinemaUser from CinemaUser cu join cu.purchases p group by cu.id order by sum(p.numberOfTickets * p.seance.price) desc limit 1")
     CinemaUser getUserWithHighestSpendings();
+
+    @Query(value = "select CinemaUser from CinemaUser cu join MovieRate mr group by cu.id order by count(mr.user) desc  limit 1")
+    CinemaUser getUserWithMostRates();
 }
