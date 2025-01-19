@@ -41,6 +41,7 @@ public class Movie {
     private Set<Type> types = new HashSet<>();
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "movie", allowSetters = true)
     private List<MovieRate> ratings;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)

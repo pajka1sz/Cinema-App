@@ -1,6 +1,8 @@
 package agh.to.lab.cinema.restController;
 
 import agh.to.lab.cinema.model.movies.MovieService;
+import agh.to.lab.cinema.model.purchases.Purchase;
+import agh.to.lab.cinema.model.purchases.PurchaseService;
 import agh.to.lab.cinema.model.rates.MovieRate;
 import agh.to.lab.cinema.model.rates.MovieRateDTO;
 import agh.to.lab.cinema.model.rates.MovieRateService;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -18,14 +21,16 @@ public class MovieRateController {
     private MovieRateService movieRateService;
     private MovieService movieService;
     private UserService userService;
+    private PurchaseService purchaseService;
 
     @Getter
     private static String baseUrl = "http://localhost:8080/movie_rate";
 
-    public MovieRateController(MovieRateService movieRateService, MovieService movieService, UserService userService) {
+    public MovieRateController(MovieRateService movieRateService, MovieService movieService, UserService userService, PurchaseService purchaseService) {
         this.movieRateService = movieRateService;
         this.movieService = movieService;
         this.userService = userService;
+        this.purchaseService = purchaseService;
     }
 
     @PostMapping(value = "/add_test")
@@ -76,6 +81,16 @@ public class MovieRateController {
                     && movieRate.getUser().getId().equals(movieRateDTO.getUser_id().longValue()))
                 return new ResponseEntity<>("This user has already given a rate for this film!", HttpStatus.BAD_REQUEST);
         }
+        List<Purchase> allUserPurchases = purchaseService.getPurchasesOfUser(movieRateDTO.getUser_id().longValue());
+        boolean wasOnFilm = false;
+        for (Purchase purchase: allUserPurchases) {
+            if (purchase.getUser().getId().equals(movieRateDTO.getUser_id().longValue())
+                    && purchase.getSeance().getMovie().getId().equals(movieRateDTO.getMovie_id())
+                    && purchase.getSeance().getStartDate().isBefore(LocalDateTime.now()))
+                wasOnFilm = true;
+        }
+        if (!wasOnFilm)
+            return new ResponseEntity<>("This user has not watched this film in our cinema yet!", HttpStatus.NOT_FOUND);
 
         MovieRate rate = new MovieRate(
                 movieService.getMovie(movieRateDTO.getMovie_id()),
