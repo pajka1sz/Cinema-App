@@ -4,25 +4,27 @@ import agh.to.lab.cinema.app.CinemaApp;
 import agh.to.lab.cinema.model.movies.Movie;
 import agh.to.lab.cinema.model.movies.MovieRepository;
 import agh.to.lab.cinema.model.movies.MovieService;
+import agh.to.lab.cinema.model.types.MovieType;
+import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.restController.MovieController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class UserDefaultController {
@@ -34,6 +36,15 @@ public class UserDefaultController {
     private TableColumn<Movie, String> titleColumn;
     @FXML
     private TableColumn<Movie, Integer> lengthColumn;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private FlowPane typeCheckboxPane;
+
+    private ObservableList<Movie> filteredMovies;
+    private ObservableList<Movie> movies;
+
+    private Set<MovieType> selectedTypes = new HashSet<>();
 
     public void initialize() throws IOException, InterruptedException {
         String baseUrl = MovieController.getBaseUrl();
@@ -43,7 +54,8 @@ public class UserDefaultController {
                 .GET()
                 .build();
         HttpResponse<String> response = moviesClient.send(moviesRequest, HttpResponse.BodyHandlers.ofString());
-        ObservableList<Movie> movies = FXCollections.observableArrayList(new ObjectMapper().readValue(response.body(), Movie[].class));
+        movies = FXCollections.observableArrayList(new ObjectMapper().readValue(response.body(), Movie[].class));
+        filteredMovies = FXCollections.observableArrayList(movies);
         movieTable.setItems(movies);
         movieTable.setRowFactory(row -> {
             TableRow<Movie> tableRow = new TableRow<>();
@@ -100,9 +112,37 @@ public class UserDefaultController {
                 }
             }
         });
+
+        for (MovieType movieType : MovieType.values()) {
+            CheckBox checkBox = new CheckBox(movieType.toString());
+            checkBox.setOnAction(event -> {
+                if (checkBox.isSelected()) {
+                    selectedTypes.add(movieType);
+                } else {
+                    selectedTypes.remove(movieType);
+                }
+                applyFilters();
+            });
+            typeCheckboxPane.getChildren().add(checkBox);
+        }
     }
 
     public void showAccountDetails(ActionEvent actionEvent) {
         CinemaApp.loadView("views/user/userInfo.fxml");
+    }
+
+    @FXML
+    private void applyFilters() {
+        String searchText = searchField.getText().toLowerCase();
+
+        filteredMovies.setAll(movies.filtered(movie -> {
+            boolean matchesSearch = movie.getTitle().toLowerCase().contains(searchText);
+            boolean matchesType = selectedTypes.isEmpty() || movie.getTypes().stream()
+                    .map(Type::getMovieType)
+                    .anyMatch(selectedTypes::contains);
+            return matchesSearch && matchesType;
+        }));
+
+        movieTable.setItems(filteredMovies);
     }
 }

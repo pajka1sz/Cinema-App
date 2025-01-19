@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<?import javafx.collections.FXCollections?>
 <?import javafx.scene.shape.Line?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -31,6 +26,10 @@
     </left>
     <center>
         <VBox alignment="TOP_CENTER" spacing="15" minWidth="650" maxWidth="700" style="-fx-padding: 10 0 0 0">
+            <HBox spacing="10" alignment="CENTER">
+                <TextField fx:id="searchField" promptText="Search by title, description, or length..." minWidth="300" />
+                <ComboBox fx:id="typeComboBox" promptText="Select type..." />
+            </HBox>
             <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Currently shown movies:</Label>
             <TableView fx:id="adminMoviesTable" prefHeight="250.0" maxHeight="400.0" prefWidth="500.0" maxWidth="700" BorderPane.alignment="CENTER">
                 <columns>

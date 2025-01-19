@@ -8,13 +8,18 @@
 
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.Font?>
+<?import javafx.collections.FXCollections?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="agh.to.lab.cinema.viewController.user.UserDefaultController"
             minHeight="550.0" minWidth="850.0">
 
     <top>
-        <Button text="Account Details" onAction="#showAccountDetails" />
+        <HBox spacing="10.0" alignment="CENTER">
+            <Button text="Account Details" onAction="#showAccountDetails" />
+            <TextField fx:id="searchField" promptText="Search by title..." />
+            <Button text="Apply" onAction="#applyFilters" />
+        </HBox>
     </top>
     <center>
         <VBox alignment="CENTER" spacing="20.0">
@@ -23,6 +28,7 @@
                     <Font size="24.0" />
                 </font>
             </Text>
+            <FlowPane fx:id="typeCheckboxPane" hgap="10.0" vgap="10.0" />
             <TableView fx:id="movieTable">
                 <columns>
                     <TableColumn fx:id="thumbnailColumn" sortable="false" text="Thumbnail" />

@@ -33,6 +33,7 @@
         <VBox alignment="TOP_CENTER" spacing="15" minWidth="650" maxWidth="700" style="-fx-padding: 10 10 0 0">
             <HBox spacing="15">
                 <VBox>
+                    <TextField fx:id="searchField" promptText="Search by title..."/>
                     <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Movies:</Label>
                     <TableView fx:id="adminMoviesTable" prefHeight="200.0" maxHeight="250" prefWidth="450.0" maxWidth="500" BorderPane.alignment="CENTER">
                         <columns>

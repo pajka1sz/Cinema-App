@@ -2,6 +2,7 @@ package agh.to.lab.cinema.viewController.admin;
 
 import agh.to.lab.cinema.model.movies.Movie;
 import agh.to.lab.cinema.model.purchases.Purchase;
+import agh.to.lab.cinema.model.types.MovieType;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.restController.MovieController;
 import agh.to.lab.cinema.restController.PurchaseController;
@@ -10,7 +11,6 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -39,6 +39,13 @@ public class AdminMoviesController extends AdminController {
     private TableColumn<Movie, String> movieThumbnail;
     @FXML
     private TableColumn<Movie, Set<Type>> movieTypes;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private ComboBox<MovieType> typeComboBox;
+
+    private ObservableList<Movie> filteredMovies;
+    private ObservableList<Movie> movies;
 
     // Buttons
     @FXML
@@ -57,7 +64,8 @@ public class AdminMoviesController extends AdminController {
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        ObservableList<Movie> movies = FXCollections.observableArrayList(new ObjectMapper().readValue(response.body(), Movie[].class));
+        movies = FXCollections.observableArrayList(new ObjectMapper().readValue(response.body(), Movie[].class));
+        filteredMovies = FXCollections.observableArrayList(movies);
         System.out.println(response.body());
 
         adminMoviesTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -87,6 +95,10 @@ public class AdminMoviesController extends AdminController {
         editMovieButton.disableProperty().bind(Bindings.size(
                 adminMoviesTable.getSelectionModel().getSelectedItems()).isNotEqualTo(1));
         deleteMovieButton.disableProperty().bind(Bindings.isEmpty(adminMoviesTable.getSelectionModel().getSelectedItems()));
+
+        typeComboBox.setItems(FXCollections.observableArrayList(MovieType.values()));
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> applyFilters());
+        typeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> applyFilters());
     }
 
     @FXML
@@ -175,5 +187,25 @@ public class AdminMoviesController extends AdminController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void applyFilters() {
+        String searchText = searchField.getText().toLowerCase();
+        MovieType selectedType = typeComboBox.getValue();
+
+        filteredMovies.setAll(movies.filtered(movie -> {
+            boolean matchesSearch = searchText.isEmpty() ||
+                    movie.getTitle().toLowerCase().contains(searchText) ||
+                    movie.getDescription().toLowerCase().contains(searchText) ||
+                    String.valueOf(movie.getLength()).contains(searchText);
+
+            boolean matchesType = selectedType == null ||
+                    movie.getTypes().stream().anyMatch(type -> type.getMovieType().equals(selectedType));
+
+            return matchesSearch && matchesType;
+        }));
+
+        adminMoviesTable.setItems(filteredMovies);
     }
 }

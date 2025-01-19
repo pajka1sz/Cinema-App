@@ -1,25 +1,20 @@
 package agh.to.lab.cinema.viewController.admin;
 
 import agh.to.lab.cinema.model.movies.Movie;
-import agh.to.lab.cinema.model.purchases.Purchase;
-import agh.to.lab.cinema.model.roles.Role;
 import agh.to.lab.cinema.model.rooms.Room;
 import agh.to.lab.cinema.model.seances.Seance;
-import agh.to.lab.cinema.model.users.CinemaUser;
 import agh.to.lab.cinema.restController.MovieController;
 import agh.to.lab.cinema.restController.RoomController;
 import agh.to.lab.cinema.restController.SeanceController;
-import agh.to.lab.cinema.restController.UserController;
-import agh.to.lab.cinema.viewController.JsonBodyCreator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,7 +24,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -68,6 +62,11 @@ public class AdminSeancesController extends AdminController {
     TableColumn<Seance, String> seanceStartDate;
     @FXML
     TableColumn<Seance, Float> seancePrice;
+    @FXML
+    private TextField searchField;
+
+    private ObservableList<Movie> filteredMovies;
+    private ObservableList<Movie> movies;
 
     @FXML
     private void initialize() throws Exception {
@@ -80,7 +79,8 @@ public class AdminSeancesController extends AdminController {
                 .GET()
                 .build();
         HttpResponse<String> responseMovie = clientMovie.send(requestMovie, HttpResponse.BodyHandlers.ofString());
-        ObservableList<Movie> movies = FXCollections.observableArrayList(new ObjectMapper().readValue(responseMovie.body(), Movie[].class));
+        movies = FXCollections.observableArrayList(new ObjectMapper().readValue(responseMovie.body(), Movie[].class));
+        filteredMovies = FXCollections.observableArrayList(movies);
         System.out.println(responseMovie.body());
 
         movieTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -141,6 +141,7 @@ public class AdminSeancesController extends AdminController {
 
         seancePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         adminSeancesTable.setItems(seances);
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> search());
     }
 
     @FXML
@@ -195,5 +196,11 @@ public class AdminSeancesController extends AdminController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void search() {
+        filteredMovies.setAll(movies.filtered(movie -> movie.getTitle().toLowerCase().contains(searchField.getText().toLowerCase())));
+        adminMoviesTable.setItems(filteredMovies);
     }
 }
