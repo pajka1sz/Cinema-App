@@ -19,6 +19,7 @@
             <Button text="Account Details" onAction="#showAccountDetails" />
             <TextField fx:id="searchField" promptText="Search by title..." />
             <Button text="Apply" onAction="#applyFilters" />
+            <Button fx:id="rateButton" text="Rate" onAction="#rateMovie" />
         </HBox>
     </top>
     <center>

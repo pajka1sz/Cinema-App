@@ -2,21 +2,25 @@ package agh.to.lab.cinema.viewController.user;
 
 import agh.to.lab.cinema.app.CinemaApp;
 import agh.to.lab.cinema.model.movies.Movie;
-import agh.to.lab.cinema.model.movies.MovieRepository;
-import agh.to.lab.cinema.model.movies.MovieService;
 import agh.to.lab.cinema.model.types.MovieType;
 import agh.to.lab.cinema.model.types.Type;
+import agh.to.lab.cinema.model.users.CinemaUser;
 import agh.to.lab.cinema.restController.MovieController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URI;
@@ -40,6 +44,8 @@ public class UserDefaultController {
     private TextField searchField;
     @FXML
     private FlowPane typeCheckboxPane;
+    @FXML
+    private Button rateButton;
 
     private ObservableList<Movie> filteredMovies;
     private ObservableList<Movie> movies;
@@ -125,10 +131,40 @@ public class UserDefaultController {
             });
             typeCheckboxPane.getChildren().add(checkBox);
         }
+
+        rateButton.disableProperty().bind(Bindings.size(movieTable.getSelectionModel().getSelectedItems()).isNotEqualTo(1));
     }
 
-    public void showAccountDetails(ActionEvent actionEvent) {
+    public void showAccountDetails() {
         CinemaApp.loadView("views/user/userInfo.fxml");
+    }
+
+    private void showRateWindow(Movie movie, CinemaUser user) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(UserDefaultController.class.getClassLoader().getResource("views/user/userRateAddDialog.fxml"));
+            BorderPane page = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add rate");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(CinemaApp.getPrimaryStage());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            UserAddRatePresenter presenter = loader.getController();
+            presenter.setDialogStage(dialogStage);
+            presenter.setData(movie, user);
+
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void rateMovie() {
+        showRateWindow(movieTable.getSelectionModel().getSelectedItem(), CinemaApp.getLoggedUser());
     }
 
     @FXML
