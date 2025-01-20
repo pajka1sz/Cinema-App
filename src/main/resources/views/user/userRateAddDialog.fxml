@@ -9,9 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.cell.CheckBoxListCell?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
 <BorderPane prefWidth="300.0"
             xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -34,12 +32,12 @@
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
                 </Label>
-                <Label text="Rate" GridPane.rowIndex="2">
+                <Label text="Rate" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets  left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
                 </Label>
-                <Label text="Description" GridPane.rowIndex="1">
+                <Label text="Description" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
@@ -49,12 +47,12 @@
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField fx:id="rateRateTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <TextField fx:id="rateRateTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
                 </TextField>
-                <TextField fx:id="rateDescriptionTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <TextField fx:id="rateDescriptionTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
@@ -63,21 +61,28 @@
         </GridPane>
     </center>
     <bottom>
-        <HBox alignment="BOTTOM_RIGHT" spacing="5.0" BorderPane.alignment="CENTER">
-            <children>
-                <Button mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="60.0" text="Cancel">
-                    <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </HBox.margin></Button>
-                <Button mnemonicParsing="false" onAction="#handleOkAction" prefWidth="60.0" text="Ok">
-                    <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </HBox.margin></Button>
-            </children>
-            <BorderPane.margin>
-                <Insets left="5.0" right="5.0" top="5.0" />
-            </BorderPane.margin>
-        </HBox>
+        <VBox alignment="BOTTOM_RIGHT" spacing="5.0" BorderPane.alignment="CENTER">
+            <Label fx:id="rateDialogInfoLabel" text="AAA" textFill="red" GridPane.rowIndex="3">
+                <VBox.margin>
+                    <Insets left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+            </Label>
+            <HBox alignment="BOTTOM_RIGHT" spacing="5.0" BorderPane.alignment="CENTER">
+                <children>
+                    <Button mnemonicParsing="false" onAction="#handleCancelAction" prefWidth="60.0" text="Cancel">
+                        <HBox.margin>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        </HBox.margin></Button>
+                    <Button mnemonicParsing="false" onAction="#handleOkAction" prefWidth="60.0" text="Ok">
+                        <HBox.margin>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        </HBox.margin></Button>
+                </children>
+                <BorderPane.margin>
+                    <Insets left="5.0" right="5.0" top="5.0" />
+                </BorderPane.margin>
+            </HBox>
+        </VBox>
     </bottom>
     <opaqueInsets>
         <Insets />
