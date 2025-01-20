@@ -6,6 +6,8 @@ import agh.to.lab.cinema.model.rooms.Room;
 import agh.to.lab.cinema.model.seances.Seance;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.model.users.CinemaUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,13 +17,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class CinemaStatisticsImpl implements CinemaStatisticsFacade{
+public class CinemaStatisticsService implements CinemaStatisticsFacade{
     private final CinemaUserStatisticsProvider cinemaUserStatisticsProvider;
     private final MovieStatisticsProvider movieStatisticsProvider;
     private final PurchasesStatisticsProvider purchasesStatisticsProvider;
     private final RoomStatisticsProvider roomStatisticsProvider;
 
-    public CinemaStatisticsImpl(CinemaUserStatisticsProvider cinemaUserStatisticsProvider,
+    public CinemaStatisticsService(CinemaUserStatisticsProvider cinemaUserStatisticsProvider,
                                 MovieStatisticsProvider movieStatisticsProvider,
                                 PurchasesStatisticsProvider purchasesStatisticsProvider,
                                 RoomStatisticsProvider roomStatisticsProvider) {
@@ -53,8 +55,8 @@ public class CinemaStatisticsImpl implements CinemaStatisticsFacade{
     }
 
     @Override
-    public Double getRevenueFromMovie(Movie movie) {
-        return movieStatisticsProvider.getRevenueFromMovie(movie);
+    public Double getRevenueFromMovie(Long movieId) {
+        return movieStatisticsProvider.getRevenueFromMovie(movieId);
     }
 
     @Override
@@ -98,8 +100,8 @@ public class CinemaStatisticsImpl implements CinemaStatisticsFacade{
     }
 
     @Override
-    public Double getMovieRatesAvg(Movie movie) {
-        return movieStatisticsProvider.getMovieRatesAvg(movie);
+    public Double getMovieRatesAvg(Long movieId) {
+        return movieStatisticsProvider.getMovieRatesAvg(movieId);
     }
 
     @Override

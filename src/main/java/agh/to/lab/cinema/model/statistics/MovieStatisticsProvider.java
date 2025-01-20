@@ -5,13 +5,15 @@ import agh.to.lab.cinema.model.types.Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface MovieStatisticsProvider extends JpaRepository<Movie, Long> {
 
-    @Query("select coalesce(sum(p.numberOfTickets * s.price), 0) from Purchase p join p.seance s where p.seance.movie = :movie")
-    Double getRevenueFromMovie(@Param("movie") Movie movie);
+    @Query("select coalesce(sum(p.numberOfTickets * s.price), 0) from Purchase p join p.seance s where p.seance.movie.id = :movieId")
+    Double getRevenueFromMovie(@Param("movieId") Long movieId);
 
     //     List<Object[]> results = statisticsProvider.getSumOfTicketsPerMovie();
     //
@@ -27,8 +29,8 @@ public interface MovieStatisticsProvider extends JpaRepository<Movie, Long> {
     @Query("select t from Type t join t.movies m join m.seances s join s.purchases p group by t order by count(p.numberOfTickets) desc limit 3")
     List<Type> getTop3MostPopularTypes();
 
-    @Query("select avg(mr.rate) from MovieRate mr where mr.movie = :movie")
-    Double getMovieRatesAvg(@Param("movie") Movie movie);
+    @Query("select avg(mr.rate) from MovieRate mr where mr.movie.id = :movieId")
+    Double getMovieRatesAvg(@Param("movieId") Long movieId);
 
     @Query("select mr.movie, avg(mr.rate) from MovieRate mr group by mr.movie")
     List<Object[]> getMovieRatesAvgPerMovie();

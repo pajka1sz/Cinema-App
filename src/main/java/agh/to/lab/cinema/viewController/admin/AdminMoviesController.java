@@ -6,10 +6,12 @@ import agh.to.lab.cinema.model.types.MovieType;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.restController.MovieController;
 import agh.to.lab.cinema.restController.PurchaseController;
+import agh.to.lab.cinema.restController.StatisticsController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -207,5 +209,20 @@ public class AdminMoviesController extends AdminController {
         }));
 
         adminMoviesTable.setItems(filteredMovies);
+    }
+
+    public void movieInfo(ActionEvent actionEvent) {
+        Movie movie = adminMoviesTable.getSelectionModel().getSelectedItem();
+        if (movie != null) {
+            StringBuilder info = new StringBuilder();
+            info.append("Title: ").append(movie.getTitle()).append("\n");
+            String url = StatisticsController.getBaseUrl() + "/movie_gross/" + movie.getId();
+            info.append("Gross revenue: ").append(sendGet(url)).append("\n");
+            url = StatisticsController.getBaseUrl() + "/movie_total_tickets/" + movie.getId();
+            info.append("Total tickets sold: ").append(sendGet(url)).append("\n");
+            url = StatisticsController.getBaseUrl() + "/movie_avg_rate/" + movie.getId();
+            info.append("Average rate: ").append(sendGet(url)).append("\n");
+            showInfoPopup(info.toString());
+        }
     }
 }

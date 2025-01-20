@@ -3,19 +3,12 @@ package agh.to.lab.cinema.restController;
 import agh.to.lab.cinema.model.movies.Movie;
 import agh.to.lab.cinema.model.movies.MovieDTO;
 import agh.to.lab.cinema.model.movies.MovieService;
-import agh.to.lab.cinema.model.rooms.Room;
-import agh.to.lab.cinema.model.statistics.CinemaStatisticsImpl;
 import agh.to.lab.cinema.model.types.MovieType;
 import agh.to.lab.cinema.model.types.Type;
 import agh.to.lab.cinema.model.types.TypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,21 +18,18 @@ public class MovieController {
 
     private final MovieService movieService;
     private final TypeService typeService;
-    private final CinemaStatisticsImpl cinemaStatisticsService;
     private static final String baseUrl = "http://localhost:8080/movie";
     public static String getBaseUrl() {
         return baseUrl;
     }
 
-    public MovieController(MovieService movieService, TypeService typeService, CinemaStatisticsImpl cinemaStatisticsService) {
+    public MovieController(MovieService movieService, TypeService typeService) {
         this.movieService = movieService;
         this.typeService = typeService;
-        this.cinemaStatisticsService = cinemaStatisticsService;
     }
 
     @GetMapping
     public List<Movie> getMovies() {
-        System.out.println(cinemaStatisticsService.getUserWithMostReservation());
         return movieService.getMovies();
     }
 
