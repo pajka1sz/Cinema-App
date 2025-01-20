@@ -22,6 +22,7 @@
             <Button text="Seances" onAction="#getAdminSeancesView" prefWidth="130" prefHeight="50" textFill="white" style=" -fx-background-color: #008c88"/>
             <Button text="Reservations" onAction="#getAdminPurchasesView" prefWidth="130" prefHeight="50" textFill="white" style=" -fx-background-color: #008c88"/>
             <Button text="Rooms" onAction="#getAdminRoomsView" prefWidth="130" prefHeight="50" textFill="white" style="-fx-background-color: #008c88"/>
+            <Button text="Statistics" onAction="#getAdminStatsView" prefWidth="130" prefHeight="50" textFill="white" style="-fx-background-color: #008c88"/>
         </VBox>
     </left>
     <center>

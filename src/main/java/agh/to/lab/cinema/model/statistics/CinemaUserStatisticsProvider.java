@@ -15,14 +15,14 @@ import java.util.List;
 
 @Repository
 public interface CinemaUserStatisticsProvider extends JpaRepository<CinemaUser, Long> {
-    @Query(value = "select cu.* from PURCHASE p join CINEMA_USER cu on p.USER_ID = cu.ID group by p.USER_ID order by count(p.USER_ID) desc limit 1", nativeQuery = true)
+    @Query("select CinemaUser from CinemaUser cu join cu.purchases p group by cu.id order by count(p) desc limit 1")
     CinemaUser getUserWithMostReservation();
 
     @Query("select count(*) from Purchase p where p.id = :userId")
     Long getReservationCountByUser(@Param("userId") Long userId);
 
-    @Query("select CinemaUser from CinemaUser cu join cu.purchases p group by cu.id order by sum(p.numberOfTickets * p.seance.price) desc limit 1")
-    CinemaUser getUserWithHighestSpendings();
+    @Query("select cu from CinemaUser cu join cu.purchases p group by cu.id order by sum(p.numberOfTickets * p.seance.price) desc")
+    List<CinemaUser> getUsersWithHighestSpendings();
 
     @Query(value = "select CinemaUser from CinemaUser cu join MovieRate mr group by cu.id order by count(mr.user) desc  limit 1")
     CinemaUser getUserWithMostRates();

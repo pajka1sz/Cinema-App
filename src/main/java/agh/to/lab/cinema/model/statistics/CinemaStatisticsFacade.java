@@ -17,7 +17,7 @@ import java.util.Map;
 public interface CinemaStatisticsFacade {
     CinemaUser getUserWithMostReservation();
     Long getReservationCountByUser(Long userId);
-    CinemaUser getUserWithHighestSpendings();
+    List<CinemaUser> getUsersWithHighestSpendings();
     Double getRevenueFromMovie(Long movieId);
     Map<Movie, Integer> getSumOfTicketsPerMovie();
     List<Type> getTop3MostPopularTypes();

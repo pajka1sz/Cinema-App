@@ -45,8 +45,8 @@ public class CinemaStatisticsService implements CinemaStatisticsFacade{
     }
 
     @Override
-    public CinemaUser getUserWithHighestSpendings() {
-        return cinemaUserStatisticsProvider.getUserWithHighestSpendings();
+    public List<CinemaUser> getUsersWithHighestSpendings() {
+        return cinemaUserStatisticsProvider.getUsersWithHighestSpendings();
     }
 
     @Override

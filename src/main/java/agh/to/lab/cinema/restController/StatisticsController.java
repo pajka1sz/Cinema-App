@@ -2,6 +2,7 @@ package agh.to.lab.cinema.restController;
 
 import agh.to.lab.cinema.model.movies.Movie;
 import agh.to.lab.cinema.model.statistics.CinemaStatisticsService;
+import agh.to.lab.cinema.model.users.CinemaUser;
 import lombok.Getter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,5 +42,12 @@ public class StatisticsController {
         }
         return 0L;
     }
+
+    @GetMapping("/user_most_money")
+    public String getUserWhoSpentMostMoney() {
+        CinemaUser user = cinemaStatisticsService.getUsersWithHighestSpendings().get(0);
+        return "User: " + user.getEmail() + " spent the most money\nhe did " + cinemaStatisticsService.getReservationCountByUser(user.getId()) + " reservations overall";
+    }
+
 
 }

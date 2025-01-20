@@ -90,6 +90,11 @@ public abstract class AdminController {
         loadView("views/admin/adminRoomPanel.fxml");
     }
 
+    @FXML
+    public void getAdminStatsView() {
+        loadView("views/admin/adminStatsPanel.fxml");
+    }
+
 
     public boolean showMovieEditAndAddDialog(Movie movie) {
         try {
