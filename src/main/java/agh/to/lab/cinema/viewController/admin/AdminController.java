@@ -12,7 +12,10 @@ import agh.to.lab.cinema.viewController.JsonBodyCreator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -160,6 +163,40 @@ public abstract class AdminController {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public void showInfoPopup(String message) {
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setTitle("Information");
+
+        Label messageLabel = new Label(message);
+
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(e -> popupStage.close());
+
+        VBox layout = new VBox(10, messageLabel, closeButton);
+        layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
+
+        Scene scene = new Scene(layout, 300, 150);
+        popupStage.setScene(scene);
+
+        popupStage.showAndWait();
+    }
+
+    protected String sendGet(String url) {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

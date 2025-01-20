@@ -7,11 +7,13 @@ import agh.to.lab.cinema.model.users.CinemaUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Repository
 public interface CinemaUserStatisticsProvider extends JpaRepository<CinemaUser, Long> {
     @Query(value = "select cu.* from PURCHASE p join CINEMA_USER cu on p.USER_ID = cu.ID group by p.USER_ID order by count(p.USER_ID) desc limit 1", nativeQuery = true)
     CinemaUser getUserWithMostReservation();

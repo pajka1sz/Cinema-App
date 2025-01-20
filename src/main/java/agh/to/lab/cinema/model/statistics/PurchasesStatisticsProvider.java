@@ -4,11 +4,13 @@ import agh.to.lab.cinema.model.purchases.Purchase;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Repository
 public interface PurchasesStatisticsProvider extends JpaRepository<Purchase, Long> {
     // statisticsProvider.findLargePurchases(BigDecimal.valueOf(10))
     @Query("select p from Purchase p where p.numberOfTickets * p.seance.price > :amount")

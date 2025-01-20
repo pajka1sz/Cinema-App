@@ -41,6 +41,7 @@
                 </columns>
             </TableView>
             <HBox alignment="TOP_CENTER" spacing="15">
+                <Button fx:id="showMovieInfoButton" minWidth="75.0" onAction="#movieInfo">Info</Button>
                 <Button fx:id="editMovieButton" minWidth="75.0" onAction="#editMovie">Edit</Button>
                 <Button minWidth="75.0" onAction="#addMovie">Add</Button>
                 <Button fx:id="deleteMovieButton" minWidth="75.0" onAction="#deleteMovies">Delete</Button>
