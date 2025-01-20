@@ -220,7 +220,7 @@ public class AdminMoviesController extends AdminController {
             info.append("Gross revenue: ").append(sendGet(url)).append("\n");
             url = StatisticsController.getBaseUrl() + "/movie_total_tickets/" + movie.getId();
             info.append("Total tickets sold: ").append(sendGet(url)).append("\n");
-            url = StatisticsController.getBaseUrl() + "/movie_avg_rate/" + movie.getId();
+            url = StatisticsController.getBaseUrl() + "/movie_avg_rates/" + movie.getId();
             info.append("Average rate: ").append(sendGet(url)).append("\n");
             showInfoPopup(info.toString());
         }

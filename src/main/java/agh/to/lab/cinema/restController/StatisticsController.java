@@ -26,7 +26,7 @@ public class StatisticsController {
         return cinemaStatisticsService.getRevenueFromMovie(id);
     }
 
-    @GetMapping("/movie_ang_rates/{id}")
+    @GetMapping("/movie_avg_rates/{id}")
     public Double getMovieRatesAvg(@PathVariable Long id) {
         return cinemaStatisticsService.getMovieRatesAvg(id);
     }
