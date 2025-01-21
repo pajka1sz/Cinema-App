@@ -18,6 +18,6 @@ public interface PurchasesStatisticsProvider extends JpaRepository<Purchase, Lon
 
     // LocalDateTime now = LocalDateTime.now();
     // statisticsProvider.getAverageAmountOfTicketsRecently(now, now.minusMonths(1))
-    @Query("select avg(p.numberOfTickets) from Seance s join s.purchases p where s.startDate <= :end and s.startDate >= :start")
-    Double getAverageAmountOfTicketsRecently(@Param("startDate") LocalDateTime start, @Param("endDate") LocalDateTime end);
+    @Query("select coalesce(avg(p.numberOfTickets), 0) from Seance s join s.purchases p where s.startDate <= :end and s.startDate >= :start")
+    Double getAverageAmountOfTicketsRecently(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 }

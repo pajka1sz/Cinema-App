@@ -10,9 +10,20 @@ public class AdminStatsController extends AdminController{
 
     @FXML
     public void initialize() {
+        String[] endpoints = {
+                "/user_most_money",
+                "/most_popular_room",
+                "/most_rated_movie",
+                "/best_rated_movie",
+                "/worst_rated_movie",
+                "/average_tickets_last_month"
+        };
         StringBuilder sb = new StringBuilder();
-        String url = StatisticsController.getBaseUrl() + "/user_most_money";
-        sb.append("User who spend the most money: ").append(sendGet(url)).append("\n");
+        String url;
+        for (String endpoint : endpoints) {
+            url = StatisticsController.getBaseUrl() + endpoint;
+            sb.append(sendGet(url)).append("\n");
+        }
         statsText.setText(sb.toString());
     }
 }
