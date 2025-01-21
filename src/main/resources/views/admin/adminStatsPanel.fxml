@@ -1,41 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.shape.Line?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            minHeight="550.0" minWidth="850.0"
-            styleClass="gallery-pane"
-            fx:controller="agh.to.lab.cinema.viewController.admin.AdminStatsController"
-            fx:id="window">
+<BorderPane fx:id="window" minHeight="550.0" minWidth="850.0" styleClass="gallery-pane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="agh.to.lab.cinema.viewController.admin.AdminStatsController">
 
     <top>
         <VBox alignment="TOP_CENTER" spacing="15">
             <Label style="-fx-font-size: 6em; -fx-font-weight: bold">Statistics Panel</Label>
-            <Line startX="150" endX="700" stroke="#008c88" strokeWidth="2"/>
+            <Line endX="700" startX="150" stroke="#008c88" strokeWidth="2" />
         </VBox>
     </top>
     <left>
-        <VBox alignment="TOP_CENTER" spacing="3" minWidth="150" maxWidth="200" style="-fx-font-size: 1.5em;">
-            <Button text="Users" onAction="#getAdminUsersView" prefWidth="130" prefHeight="50" textFill="white" style="-fx-background-color: #008c88"/>
-            <Button text="Movies" onAction="#getAdminMoviesView" prefWidth="130" prefHeight="50" textFill="white" style=" -fx-background-color: #008c88"/>
-            <Button text="Seances" onAction="#getAdminSeancesView" prefWidth="130" prefHeight="50" textFill="white" style=" -fx-background-color: #008c88"/>
-            <Button text="Reservations" onAction="#getAdminPurchasesView" prefWidth="130" prefHeight="50" textFill="white" style=" -fx-background-color: #008c88"/>
-            <Button text="Rooms" onAction="#getAdminRoomsView" prefWidth="130" prefHeight="50" textFill="white" style="-fx-background-color: #008c88"/>
-            <Button text="Statistics" onAction="#getAdminStatsView" prefWidth="130" prefHeight="50" textFill="white" style="-fx-background-color: #0094d4"/>
+        <VBox alignment="TOP_CENTER" maxWidth="200" minWidth="150" spacing="3" style="-fx-font-size: 1.5em;">
+            <Button onAction="#getAdminUsersView" prefHeight="50" prefWidth="130" style="-fx-background-color: #008c88" text="Users" textFill="white" />
+            <Button onAction="#getAdminMoviesView" prefHeight="50" prefWidth="130" style=" -fx-background-color: #008c88" text="Movies" textFill="white" />
+            <Button onAction="#getAdminSeancesView" prefHeight="50" prefWidth="130" style=" -fx-background-color: #008c88" text="Seances" textFill="white" />
+            <Button onAction="#getAdminPurchasesView" prefHeight="50" prefWidth="130" style=" -fx-background-color: #008c88" text="Reservations" textFill="white" />
+            <Button onAction="#getAdminRoomsView" prefHeight="50" prefWidth="130" style="-fx-background-color: #008c88" text="Rooms" textFill="white" />
+            <Button onAction="#getAdminStatsView" prefHeight="50" prefWidth="130" style="-fx-background-color: #0094d4" text="Statistics" textFill="white" />
         </VBox>
     </left>
 
     <center>
-        <VBox alignment="TOP_CENTER" spacing="15" minWidth="650" maxWidth="700" style="-fx-padding: 10 0 0 0">
-            <Text fx:id="statsText" style="-fx-font-size: 1.5em; -fx-font-weight: bold"/>
+        <VBox alignment="TOP_CENTER" maxWidth="700" spacing="15" style="-fx-padding: 50 0 0 0;">
+            <Text fx:id="statsText" style="-fx-font-size: 1.5em;" />
         </VBox>
     </center>
+    <bottom>
+        <Button onAction="#logOut" text="Log out"/>
+    </bottom>
 
 </BorderPane>

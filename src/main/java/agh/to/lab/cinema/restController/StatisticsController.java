@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @RestController
@@ -46,8 +48,44 @@ public class StatisticsController {
     @GetMapping("/user_most_money")
     public String getUserWhoSpentMostMoney() {
         CinemaUser user = cinemaStatisticsService.getUsersWithHighestSpendings().get(0);
-        return "User: " + user.getEmail() + " spent the most money\nhe did " + cinemaStatisticsService.getReservationCountByUser(user.getId()) + " reservations overall";
+        return "User: " + user.getEmail() + " spent the most money, he did " + cinemaStatisticsService.getReservationCountByUser(user.getId()) + " reservations overall";
+    }
+    
+    @GetMapping("/most_popular_room")
+    public String getMostPopularRoom() {
+        return "Room: " + cinemaStatisticsService.getMostPopularRoom().getNumber() + " is the most popular room";
     }
 
+    @GetMapping("/most_rated_movie")
+    public String getMostRatedMovie() {
+        Movie movie = cinemaStatisticsService.getMostRatedMovie();
+        if (movie == null) {
+            return "No rated movies";
+        }
+        return "Movie: " + movie.getTitle() + " is the most rated movie";
+    }
 
+    @GetMapping("/best_rated_movie")
+    public String getBestRatedMovie() {
+        Movie movie = cinemaStatisticsService.getBestRatedMovie();
+        if (movie == null) {
+            return "No rated movies";
+        }
+        return "Movie: " + movie.getTitle() + " is the best rated movie";
+    }
+
+    @GetMapping("/worst_rated_movie")
+    public String getWorstRatedMovie() {
+        Movie movie = cinemaStatisticsService.getWorstRatedMovie();
+        if (movie == null) {
+            return "No rated movies";
+        }
+        return "Movie: " + movie.getTitle() + " is the worst rated movie";
+    }
+
+    @GetMapping("/average_tickets_last_month")
+    public String getAverageAmountOfTicketsRecently() {
+        LocalDateTime now = LocalDateTime.now();
+        return String.format("Average number of tickets this month: %.2f", cinemaStatisticsService.getAverageAmountOfTicketsRecently(now.minusMonths(1), now.minusDays(1)));
+    }
 }
