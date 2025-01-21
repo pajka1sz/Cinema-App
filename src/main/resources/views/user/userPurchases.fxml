@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="agh.to.lab.cinema.viewController.user.UserPurchasesController"
+            minHeight="550.0" minWidth="850.0">
+    <center>
+        <VBox spacing="10" alignment="CENTER" prefWidth="400">
+            <Label style="-fx-font-size: 4em; -fx-font-weight: bold" text="Your reservations"/>
+            <TableView fx:id="userPurchasesTable" maxWidth="550" maxHeight="350">
+                <columns>
+                    <TableColumn fx:id="movieTitleColumn" text="Title" />
+                    <TableColumn fx:id="seanceDateColumn" text="Date" />
+                    <TableColumn fx:id="seancePriceColumn" text="Price" />
+                    <TableColumn fx:id="numberOfTicketsColumn" text="Number of tickets" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="addRateButton" onAction="#addRate" text="Add rate" />
+                <Button fx:id="deletePurchasesButton" onAction="#deletePurchases" text="Delete" />
+            </HBox>
+            <Button onAction="#backToUserInfo" text="Back" />
+        </VBox>
+    </center>
+
+</BorderPane>

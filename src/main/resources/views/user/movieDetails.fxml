@@ -16,7 +16,7 @@
     <center>
         <VBox alignment="CENTER" maxWidth="400" spacing="10">
             <Label style="-fx-font-size: 2em" text="Seances:" />
-            <TableView fx:id="seancesTable">
+            <TableView fx:id="seancesTable" maxHeight="200">
                 <columns>
                     <TableColumn fx:id="dateColumn" text="Date" />
                     <TableColumn fx:id="roomColumn" text="Room" />

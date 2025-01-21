@@ -22,7 +22,11 @@
                 <Label text="Email:" />
                 <Label fx:id="emailLabel" />
             </HBox>
-            <Button text="Movies list" onAction="#showMoviesList" />
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Movies list" onAction="#showMoviesList" />
+                <Button text="Your reservations" onAction="#showPurchasesList"/>
+                <Button text="Your rates" onAction="#showMovieRatesList"/>
+            </HBox>
             <Button onAction="#logOut" text="Log out" />
             <Button text="Delete account" onAction="#deleteAccount" style="-fx-background-color: #a10000" textFill="white"/>
         </VBox>

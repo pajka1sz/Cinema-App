@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +75,10 @@ public class PurchaseController {
 
     @DeleteMapping(value = "/delete/{id}", consumes = "application/json")
     public ResponseEntity<String> deletePurchase(@PathVariable Integer id) {
+        Purchase purchase = purchaseService.getPurchase(id);
+        if (purchase.getSeance().getStartDate().isBefore(LocalDateTime.now())) {
+            return new ResponseEntity<>("You cannot delete reservation of already watched seance!", HttpStatus.BAD_REQUEST);
+        }
         purchaseService.deletePurchase(id);
         return new ResponseEntity<>("Purchase deleted.", HttpStatus.OK);
     }

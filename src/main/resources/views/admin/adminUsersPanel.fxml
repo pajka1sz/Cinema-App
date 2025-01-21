@@ -42,14 +42,14 @@
                             <TableColumn fx:id="userCreationDate" text="Created at" />
                         </columns>
                     </TableView>
-                    <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Change role</Label>
-                    <HBox spacing="10" alignment="CENTER">
-                        <TextField style="-fx-prompt-text-fill: gray" fx:id="changeRoleTextField" promptText="Search for user..."/>
-                        <ComboBox fx:id="changeRoleComboBox" promptText="Choose role" />
-                        <Button onAction="#changeUserRole">Change</Button>
-                        <Label>Doesn't work yet!</Label>
-<!--                        <Label fx:id="changeRoleLabel" visible="false">This user does not exist!</Label>-->
-                    </HBox>
+<!--                    <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Change role</Label>-->
+<!--                    <HBox spacing="10" alignment="CENTER">-->
+<!--                        <TextField style="-fx-prompt-text-fill: gray" fx:id="changeRoleTextField" promptText="Search for user..."/>-->
+<!--                        <ComboBox fx:id="changeRoleComboBox" promptText="Choose role" />-->
+<!--                        <Button onAction="#changeUserRole">Change</Button>-->
+<!--                        <Label>Doesn't work yet!</Label>-->
+<!--&lt;!&ndash;                        <Label fx:id="changeRoleLabel" visible="false">This user does not exist!</Label>&ndash;&gt;-->
+<!--                    </HBox>-->
                     <Label style="-fx-font-size: 2em; -fx-font-weight: bold">Delete user</Label>
                     <HBox spacing="10" alignment="CENTER">
                         <TextField fx:id="deleteUserTextField" style="-fx-prompt-text-fill: gray" promptText="Search for user..."/>

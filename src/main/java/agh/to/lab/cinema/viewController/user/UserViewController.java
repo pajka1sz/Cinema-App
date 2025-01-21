@@ -62,4 +62,12 @@ public class UserViewController {
     public void showMoviesList(ActionEvent actionEvent) {
         CinemaApp.loadView("views/user/userDefault.fxml");
     }
+
+    public void showPurchasesList() {
+        CinemaApp.loadView("views/user/userPurchases.fxml");
+    }
+
+    public void showMovieRatesList() {
+        CinemaApp.loadView("views/user/userRates.fxml");
+    }
 }
