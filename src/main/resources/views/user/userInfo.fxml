@@ -11,7 +11,7 @@
             fx:controller="agh.to.lab.cinema.viewController.user.UserViewController"
             minHeight="550.0" minWidth="850.0">
     <center>
-        <VBox spacing="10" alignment="CENTER" maxWidth="400">
+        <VBox spacing="10" alignment="CENTER" maxWidth="500">
             <Label style="-fx-font-size: 4em; -fx-font-weight: bold" fx:id="welcomeUserLabel"/>
             <Label style="-fx-font-size: 2em" text="Logged user:" />
             <HBox spacing="10" alignment="CENTER_LEFT" maxWidth="200">
@@ -22,6 +22,7 @@
                 <Label text="Email:" />
                 <Label fx:id="emailLabel" />
             </HBox>
+            <Label fx:id="notificationLabel" />
             <HBox spacing="10" alignment="CENTER">
                 <Button text="Movies list" onAction="#showMoviesList" />
                 <Button text="Your reservations" onAction="#showPurchasesList"/>

@@ -1,10 +1,8 @@
 package agh.to.lab.cinema.viewController.user;
 
 import agh.to.lab.cinema.app.CinemaApp;
-import agh.to.lab.cinema.model.movies.Movie;
 import agh.to.lab.cinema.model.purchases.Purchase;
 import agh.to.lab.cinema.model.seances.Seance;
-import agh.to.lab.cinema.restController.MovieController;
 import agh.to.lab.cinema.restController.PurchaseController;
 import agh.to.lab.cinema.restController.SeanceController;
 import agh.to.lab.cinema.viewController.JsonBodyCreator;
@@ -12,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -28,7 +25,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class UserSeancesController {
     @FXML
@@ -64,6 +60,7 @@ public class UserSeancesController {
         seances = FXCollections.observableArrayList(
                 seances.stream()
                         .filter(seance -> seance.getMovie().getId().equals(CinemaApp.getMovie().getId()))
+                        .filter(seance -> seance.getStartDate().isAfter(LocalDateTime.now()))
                         .toList() // or collect(Collectors.toList())
         );        seancesTable.setItems(seances);
         seancesTable.setRowFactory(tableView -> {
