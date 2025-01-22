@@ -5,6 +5,7 @@ import agh.to.lab.cinema.model.purchases.Purchase;
 import agh.to.lab.cinema.model.seances.Seance;
 import agh.to.lab.cinema.restController.PurchaseController;
 import agh.to.lab.cinema.restController.SeanceController;
+import agh.to.lab.cinema.restController.StatisticsController;
 import agh.to.lab.cinema.viewController.JsonBodyCreator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -46,7 +47,25 @@ public class UserSeancesController {
 
     public void initialize() throws IOException, InterruptedException {
         thumbnail.setImage(new Image(CinemaApp.getMovie().getThumbnail()));
-        thumbnailLabel.setText(CinemaApp.getMovie().getTitle());
+        StringBuilder sb = new StringBuilder();
+        sb.append(CinemaApp.getMovie().getTitle()).append("\n");
+        String url = StatisticsController.getBaseUrl() + "/movie_avg_rates/" + CinemaApp.getMovie().getId();
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.body().isEmpty()) {
+                sb.append("No rates\n");
+            } else {
+                sb.append(response.body());
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        thumbnailLabel.setText(sb.toString());
         movieDescription.setText(CinemaApp.getMovie().getDescription());
         String baseUrl = SeanceController.getBaseUrl();
         HttpClient seanceClient = HttpClient.newHttpClient();
